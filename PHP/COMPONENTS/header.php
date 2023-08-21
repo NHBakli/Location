@@ -33,7 +33,7 @@ if(isset($_SESSION['role'])) {
         <a href="../PAGES/espace_client.php">Espace Client</a>
     </li>
     <li >
-        <a href="./Deconnexion.php">Déconnexion</a>
+        <a href="./deconnexion.php">Déconnexion</a>
     </li>
     <?php endif ; ?>
 

@@ -1,10 +1,34 @@
-<?php
+<?php 
+
 session_start();
-    if (isset($_SESSION['erreur'])){
-        $erreur = $_SESSION['erreur'];
-    } else {    
-        $erreur = '';
+
+if(isset($_POST['submit'])){
+    if(isset($_POST['mail']) && isset($_POST['password'])) {
+        $email = $_POST['mail'];
+        $password = $_POST['password'];
+        $erreur = "";
+
+        include_once "../CRUD/connection.php";
+
+        $query = "SELECT * FROM users WHERE login = '$email'";
+        $result = mysqli_query($connection, $query);
+
+        if($result && mysqli_num_rows($result) > 0) {
+            $user = mysqli_fetch_assoc($result);
+            if(password_verify($password, $user['password'])) {
+                $_SESSION['email'] = $email;
+                $_SESSION['users'] = 'ok';
+                $_SESSION['role'] = $user['role'];
+                header("Location: ../../index.php");
+                exit();
+            } else {
+                $erreur = "Adresse Mail ou Mot de passe incorrect !";
+            }
+        } else {
+            $erreur = "Adresse Mail ou Mot de passe incorrect !";
+        }
     }
+}
 ?>
 
 
@@ -18,18 +42,18 @@ session_start();
     <title>Document</title>
 </head>
 <body>
-<?php include '../COMPONENTS/header.php' ?>
+<?php include '../COMPONENTS/header.php'; ?>
 
 <main>
-    <form action="../CRUD/traitement.php" method="post">
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
         <div class="mail_container">
-            <input type="text" placeholder="Email" name="mail" required>
+            <input type="email" placeholder="Email" name="mail" required>
         </div>
         <div class="password_container">
             <input type="password" placeholder="Mot de passe" name="password" required>
         </div>
         <div class="button_container">
-            <button type="submit" name="submit" value="Enregistrer">S'inscrire</button>
+            <button type="submit" name="submit" value="Enregistrer">Se connecter</button>
             <a href="../PAGES/inscription.php">Créer un compte</a>
         </div>
     </form>
