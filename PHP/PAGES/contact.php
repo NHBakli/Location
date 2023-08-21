@@ -1,7 +1,5 @@
 <?php
-
 session_start();
-
 require_once "../CRUD/connection.php";
 
 $nom = $pre = $mail = $mess ="";
@@ -57,6 +55,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // error_reporting(E_ALL);
             // $from = $mail;
             // $to = 'destinataire@domaine.com';
+            // $subject = 'Essai de PHP Mail';
             // $message = $mess;
             // $header = "De :" . $from;
             // mail($to, $subject, $message, $header);
@@ -97,7 +96,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 </div> 
             </div>
             <div class="mail_container">
-                <input type="text" placeholder="Email" name="mail">
+                <input type="email" placeholder="Email" name="mail">
             </div>
             <div class="message_container">
                 <textarea name="mess" placeholder="Message" cols="150" rows="5"></textarea>

@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -10,7 +11,9 @@
 <body>
     <?php include '../COMPONENTS/header.php' ?>
     
-
+    <?php if(isset($_SESSION['users']) && $_SESSION['users'] === 'ok') {
+    echo "<p>Bienvenue, " . $_SESSION['email'] . " !</p>";
+    }?>
 
     <?php include '../COMPONENTS/footer.php' ?>
 </body>

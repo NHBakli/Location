@@ -1,9 +1,9 @@
 <?php
 
 if(isset($_SESSION['users'])) {
-    $connect = $_SESSION['users']; // on récup "ok"
+    $_SESSION['connect'] = 'ok'; // on récup "ok"
 }else{
-    $connect = 'ko';
+    unset($_SESSION['connect']);
 }
 
 if(isset($_SESSION['role'])) {
@@ -22,7 +22,7 @@ if(isset($_SESSION['role'])) {
     </li>
 
     <!-- Si l'utilisateur n'est pas connecté, on affiche -->
-    <?php if($connect != 'ok') :  ?>
+    <?php if (!isset($_SESSION['connect']) || $_SESSION['connect'] != 'ok') :  ?>
     <li >
         <a href="./connexion.php">Inscription/Connexion</a>
     </li>
@@ -31,9 +31,6 @@ if(isset($_SESSION['role'])) {
     <?php else: ?>
     <li>
         <a href="../PAGES/espace_client.php">Espace Client</a>
-    </li>
-    <li >
-        <a href="./deconnexion.php">Déconnexion</a>
     </li>
     <?php endif ; ?>
 
@@ -45,6 +42,12 @@ if(isset($_SESSION['role'])) {
     <?php if($role == 'ADMIN') : ?>
     <li >
         <a href="../admin/index_admin.php">Admin</a>
+    </li>
+    <?php endif ; ?>
+
+    <?php if (isset($_SESSION['connect']) && $_SESSION['connect'] == 'ok') :  ?>
+    <li >
+        <a href="./deconnexion.php">Déconnexion</a>
     </li>
     <?php endif ; ?>
 </ul>

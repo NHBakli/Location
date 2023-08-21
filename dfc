@@ -1,0 +1,449 @@
+[1mdiff --git a/PHP/COMPONENTS/header.php b/PHP/COMPONENTS/header.php[m
+[1mindex 3d29e0d..05a87e6 100644[m
+[1m--- a/PHP/COMPONENTS/header.php[m
+[1m+++ b/PHP/COMPONENTS/header.php[m
+[36m@@ -1,9 +1,9 @@[m
+ <?php[m
+ [m
+ if(isset($_SESSION['users'])) {[m
+[31m-    $connect = $_SESSION['users']; // on récup "ok"[m
+[32m+[m[32m    $_SESSION['connect'] = 'ok'; // on récup "ok"[m[41m[m
+ }else{[m
+[31m-    $connect = 'ko';[m
+[32m+[m[32m    unset($_SESSION['connect']);[m[41m[m
+ }[m
+ [m
+ if(isset($_SESSION['role'])) {[m
+[36m@@ -22,7 +22,7 @@[m [mif(isset($_SESSION['role'])) {[m
+     </li>[m
+ [m
+     <!-- Si l'utilisateur n'est pas connecté, on affiche -->[m
+[31m-    <?php if($connect != 'ok') :  ?>[m
+[32m+[m[32m    <?php if (!isset($_SESSION['connect']) || $_SESSION['connect'] != 'ok') :  ?>[m[41m[m
+     <li >[m
+         <a href="./connexion.php">Inscription/Connexion</a>[m
+     </li>[m
+[36m@@ -32,9 +32,6 @@[m [mif(isset($_SESSION['role'])) {[m
+     <li>[m
+         <a href="../PAGES/espace_client.php">Espace Client</a>[m
+     </li>[m
+[31m-    <li >[m
+[31m-        <a href="./deconnexion.php">Déconnexion</a>[m
+[31m-    </li>[m
+     <?php endif ; ?>[m
+ [m
+     <li>[m
+[36m@@ -47,6 +44,12 @@[m [mif(isset($_SESSION['role'])) {[m
+         <a href="../admin/index_admin.php">Admin</a>[m
+     </li>[m
+     <?php endif ; ?>[m
+[32m+[m[41m[m
+[32m+[m[32m    <?php if (isset($_SESSION['connect']) && $_SESSION['connect'] == 'ok') :  ?>[m[41m[m
+[32m+[m[32m    <li >[m[41m[m
+[32m+[m[32m        <a href="./deconnexion.php">Déconnexion</a>[m[41m[m
+[32m+[m[32m    </li>[m[41m[m
+[32m+[m[32m    <?php endif ; ?>[m[41m[m
+ </ul>[m
+ [m
+ </header>[m
+\ No newline at end of file[m
+[1mdiff --git a/PHP/CRUD/traitement.php b/PHP/CRUD/traitement.php[m
+[1mdeleted file mode 100644[m
+[1mindex 13c5733..0000000[m
+[1m--- a/PHP/CRUD/traitement.php[m
+[1m+++ /dev/null[m
+[36m@@ -1,56 +0,0 @@[m
+[31m-<?php [m
+[31m-session_start();[m
+[31m-[m
+[31m-$_SESSION['erreur'] = '';[m
+[31m-$_SESSION['login'] = '';[m
+[31m-$_SESSION['role'] = 'MEMBRE';[m
+[31m-[m
+[31m-require_once '../CRUD/protected.php';[m
+[31m-require_once "../CRUD/connection.php";[m
+[31m-[m
+[31m-$erreur = '';[m
+[31m-[m
+[31m-[m
+[31m-if(!empty($_POST['login'])){[m
+[31m-    $login = $_POST['login'];[m
+[31m-}else{[m
+[31m-    $_SESSION['erreur'] = "Champ login vide";[m
+[31m-    header('../PAGES/inscription.php');[m
+[31m-    exit();[m
+[31m-}[m
+[31m-[m
+[31m-if(!empty($_POST['password'])){[m
+[31m-    $password = $_POST['password'];[m
+[31m-}else{[m
+[31m-    $_SESSION['erreur'] = "Champ Mot de passe vide";[m
+[31m-    header('Location: ../PAGES/connexion.php');[m
+[31m-    exit();[m
+[31m-}[m
+[31m-[m
+[31m-[m
+[31m-$login_ok = protect_montexte($login);[m
+[31m-$password_ok = protect_montexte($password);[m
+[31m-[m
+[31m-$sql = "SELECT * FROM users";[m
+[31m-[m
+[31m-[m
+[31m-if ($result = mysqli_query($conn, $sql)){[m
+[31m-    if (mysqli_num_rows($result)>0){[m
+[31m-        while($row = mysqli_fetch_array($result)){[m
+[31m-            if(($login_ok == $row['login']) && (password_verify($password_ok, $row['password']))){[m
+[31m-                $_SESSION['login'] = "ok";[m
+[31m-                $_SESSION['role'] = $row['role'];[m
+[31m-                $valide = "ok";[m
+[31m-                $_SESSION['erreur'] = '';[m
+[31m-                header('Location: ./index.php');[m
+[31m-            }[m
+[31m-        }[m
+[31m-        if($valide != "ok"){[m
+[31m-            $_SESSION['erreur'] = "Login ou mot de passe incorrect !";[m
+[31m-            header('../PAGES/inscription.php');[m
+[31m-            exit();[m
+[31m-        }[m
+[31m-    }[m
+[31m-}[m
+[31m-[m
+[31m-?>[m
+\ No newline at end of file[m
+[1mdiff --git a/PHP/PAGES/accueil.php b/PHP/PAGES/accueil.php[m
+[1mindex d69d388..cce8ad6 100644[m
+[1m--- a/PHP/PAGES/accueil.php[m
+[1m+++ b/PHP/PAGES/accueil.php[m
+[36m@@ -1,3 +1,4 @@[m
+[32m+[m[32m<?php session_start(); ?>[m[41m[m
+ <!DOCTYPE html>[m
+ <html lang="fr">[m
+ <head>[m
+[36m@@ -10,7 +11,9 @@[m
+ <body>[m
+     <?php include '../COMPONENTS/header.php' ?>[m
+     [m
+[31m-[m
+[32m+[m[32m    <?php if(isset($_SESSION['users']) && $_SESSION['users'] === 'ok') {[m[41m[m
+[32m+[m[32m    echo "<p>Bienvenue, " . $_SESSION['email'] . " !</p>";[m[41m[m
+[32m+[m[32m    }?>[m[41m[m
+ [m
+     <?php include '../COMPONENTS/footer.php' ?>[m
+ </body>[m
+[1mdiff --git a/PHP/PAGES/cgu.php b/PHP/PAGES/cgu.php[m
+[1mindex 269e1eb..fa84a04 100644[m
+[1m--- a/PHP/PAGES/cgu.php[m
+[1m+++ b/PHP/PAGES/cgu.php[m
+[36m@@ -1,3 +1,7 @@[m
+[32m+[m[32m<?php[m
+[32m+[m[32msession_start()[m
+[32m+[m[32m?>[m
+[32m+[m
+ <!DOCTYPE html>[m
+ <html lang="fr">[m
+ [m
+[36m@@ -12,15 +16,15 @@[m
+ <body>[m
+     <?php include '../COMPONENTS/header.php' ?>[m
+ [m
+[31m-    <div>[m
+[32m+[m[32m    <div class="cgu">[m
+ [m
+         <p>Mentions légales :</p>[m
+ [m
+[31m-        <p>Bla bla bla</p>[m
+[32m+[m[32m        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem fuga nisi itaque! Voluptatum, dolorum earum voluptas tenetur voluptatibus recusandae repudiandae commodi a corporis nisi enim, incidunt sint. Delectus natus aperiam velit molestiae officia reiciendis commodi atque consequatur expedita rerum quo temporibus repellat fugit illum tempora, earum nesciunt, voluptatibus nobis a!</p>[m
+ [m
+         <p>Politique de protection des données :</p>[m
+ [m
+[31m-        <p>Bla bla bla</p>[m
+[32m+[m[32m        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores eius porro itaque sequi possimus fuga, animi quidem, nisi reiciendis sed non, fugiat iusto perferendis pariatur voluptatem quibusdam veritatis earum totam nobis quas voluptatibus laboriosam! Cupiditate corporis quis, a delectus expedita error earum recusandae. Dolorem exercitationem dolor sed consectetur libero possimus illum vitae nemo nihil! Reprehenderit ullam ducimus perspiciatis laudantium in. Omnis, architecto magnam veritatis quam cum excepturi possimus blanditiis! Quaerat culpa nostrum deleniti doloribus tempore soluta? Laboriosam porro reprehenderit veritatis.</p>[m
+ [m
+     </div>[m
+ [m
+[1mdiff --git a/PHP/PAGES/connexion.php b/PHP/PAGES/connexion.php[m
+[1mindex b8c926d..c6a0f88 100644[m
+[1m--- a/PHP/PAGES/connexion.php[m
+[1m+++ b/PHP/PAGES/connexion.php[m
+[36m@@ -1,10 +1,34 @@[m
+[31m-<?php[m
+[32m+[m[32m<?php[m[41m [m
+[32m+[m[41m[m
+ session_start();[m
+[31m-    if (isset($_SESSION['erreur'])){[m
+[31m-        $erreur = $_SESSION['erreur'];[m
+[31m-    } else {    [m
+[31m-        $erreur = '';[m
+[32m+[m[41m[m
+[32m+[m[32mif(isset($_POST['submit'])){[m[41m[m
+[32m+[m[32m    if(isset($_POST['mail']) && isset($_POST['password'])) {[m[41m[m
+[32m+[m[32m        $email = $_POST['mail'];[m[41m[m
+[32m+[m[32m        $password = $_POST['password'];[m[41m[m
+[32m+[m[32m        $erreur = "";[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m        include_once "../CRUD/connection.php";[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m        $query = "SELECT * FROM users WHERE login = '$email'";[m[41m[m
+[32m+[m[32m        $result = mysqli_query($connection, $query);[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m        if($result && mysqli_num_rows($result) > 0) {[m[41m[m
+[32m+[m[32m            $user = mysqli_fetch_assoc($result);[m[41m[m
+[32m+[m[32m            if(password_verify($password, $user['password'])) {[m[41m[m
+[32m+[m[32m                $_SESSION['email'] = $email;[m[41m[m
+[32m+[m[32m                $_SESSION['users'] = 'ok';[m[41m[m
+[32m+[m[32m                $_SESSION['role'] = $user['role'];[m[41m[m
+[32m+[m[32m                header("Location: ../../index.php");[m[41m[m
+[32m+[m[32m                exit();[m[41m[m
+[32m+[m[32m            } else {[m[41m[m
+[32m+[m[32m                $erreur = "Adresse Mail ou Mot de passe incorrect !";[m[41m[m
+[32m+[m[32m            }[m[41m[m
+[32m+[m[32m        } else {[m[41m[m
+[32m+[m[32m            $erreur = "Adresse Mail ou Mot de passe incorrect !";[m[41m[m
+[32m+[m[32m        }[m[41m[m
+     }[m
+[32m+[m[32m}[m[41m[m
+ ?>[m
+ [m
+ [m
+[36m@@ -15,13 +39,13 @@[m [msession_start();[m
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">[m
+     <?php include '../COMPONENTS/important_link.php' ?>[m
+     <link rel="stylesheet" href="../../css/connexion.css">[m
+[31m-    <title>Connexion</title>[m
+[32m+[m[32m    <title>Document</title>[m[41m[m
+ </head>[m
+ <body>[m
+[31m-<?php include '../COMPONENTS/header.php' ?>[m
+[32m+[m[32m<?php include '../COMPONENTS/header.php'; ?>[m[41m[m
+ [m
+ <main>[m
+[31m-    <form action="../CRUD/traitement.php" method="post">[m
+[32m+[m[32m    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">[m[41m[m
+         <div class="mail_container">[m
+             <input type="email" placeholder="Email" name="mail" required>[m
+         </div>[m
+[36m@@ -29,7 +53,7 @@[m [msession_start();[m
+             <input type="password" placeholder="Mot de passe" name="password" required>[m
+         </div>[m
+         <div class="button_container">[m
+[31m-            <button type="submit" name="submit" value="Enregistrer">Connexion</button>[m
+[32m+[m[32m            <button type="submit" name="submit" value="Enregistrer">Se connecter</button>[m[41m[m
+             <a href="../PAGES/inscription.php">Créer un compte</a>[m
+         </div>[m
+     </form>[m
+[1mdiff --git a/PHP/PAGES/contact.php b/PHP/PAGES/contact.php[m
+[1mindex f2ded32..9f4a832 100644[m
+[1m--- a/PHP/PAGES/contact.php[m
+[1m+++ b/PHP/PAGES/contact.php[m
+[36m@@ -1,7 +1,5 @@[m
+ <?php[m
+[31m-[m
+ session_start();[m
+[31m-[m
+ require_once "../CRUD/connection.php";[m
+ [m
+ $nom = $pre = $mail = $mess ="";[m
+[36m@@ -57,6 +55,7 @@[m [mif($_SERVER["REQUEST_METHOD"] == "POST"){[m
+             // error_reporting(E_ALL);[m
+             // $from = $mail;[m
+             // $to = 'destinataire@domaine.com';[m
+[32m+[m[32m            // $subject = 'Essai de PHP Mail';[m[41m[m
+             // $message = $mess;[m
+             // $header = "De :" . $from;[m
+             // mail($to, $subject, $message, $header);[m
+[36m@@ -97,7 +96,7 @@[m [mif($_SERVER["REQUEST_METHOD"] == "POST"){[m
+                 </div> [m
+             </div>[m
+             <div class="mail_container">[m
+[31m-                <input type="text" placeholder="Email" name="mail">[m
+[32m+[m[32m                <input type="email" placeholder="Email" name="mail">[m[41m[m
+             </div>[m
+             <div class="message_container">[m
+                 <textarea name="mess" placeholder="Message" cols="150" rows="5"></textarea>[m
+[1mdiff --git a/PHP/PAGES/deconnexion.php b/PHP/PAGES/deconnexion.php[m
+[1mindex e69de29..2435b5c 100644[m
+[1m--- a/PHP/PAGES/deconnexion.php[m
+[1m+++ b/PHP/PAGES/deconnexion.php[m
+[36m@@ -0,0 +1,12 @@[m
+[32m+[m[32m<?php[m
+[32m+[m[32msession_start();[m
+[32m+[m
+[32m+[m[32munset($_SESSION['users']);[m
+[32m+[m[32munset($_SESSION['role']);[m
+[32m+[m[32munset($_SESSION['email']);[m
+[32m+[m[32munset($_SESSION['connect']);[m
+[32m+[m
+[32m+[m[32mheader('Location: ../../index.php');[m
+[32m+[m[32mexit();[m
+[32m+[m
+[32m+[m[32m?>[m
+\ No newline at end of file[m
+[1mdiff --git a/PHP/PAGES/espace_client.php b/PHP/PAGES/espace_client.php[m
+[1mindex e69de29..d35d860 100644[m
+[1m--- a/PHP/PAGES/espace_client.php[m
+[1m+++ b/PHP/PAGES/espace_client.php[m
+[36m@@ -0,0 +1,26 @@[m
+[32m+[m[32m<?php session_start() ?>[m
+[32m+[m
+[32m+[m[32m<!DOCTYPE html>[m
+[32m+[m[32m<html lang="fr">[m
+[32m+[m[32m<head>[m
+[32m+[m[32m    <meta charset="UTF-8">[m
+[32m+[m[32m    <meta name="viewport" content="width=device-width, initial-scale=1.0">[m
+[32m+[m[32m    <link rel="stylesheet" href="../../css/espace_client.css">[m
+[32m+[m[32m    <?php include '../COMPONENTS/important_link.php' ?>[m
+[32m+[m[32m    <title>Espace Client</title>[m
+[32m+[m[32m</head>[m
+[32m+[m[32m<body>[m
+[32m+[m[32m<?php include '../COMPONENTS/header.php' ?>[m
+[32m+[m
+[32m+[m[32m<main>[m
+[32m+[m[32m    <div class="container_img">[m
+[32m+[m[41m        [m
+[32m+[m[32m    </div>[m
+[32m+[m[32m    <div class="container">[m
+[32m+[m
+[32m+[m[32m    </div>[m
+[32m+[m[32m</main>[m
+[32m+[m
+[32m+[m[32m<?php include '../COMPONENTS/footer.php' ?>[m
+[32m+[m[32m</body>[m
+[32m+[m[32m</html>[m
+\ No newline at end of file[m
+[1mdiff --git a/PHP/admin/index_admin.php b/PHP/admin/index_admin.php[m
+[1mindex 54d8928..e69de29 100644[m
+[1m--- a/PHP/admin/index_admin.php[m
+[1m+++ b/PHP/admin/index_admin.php[m
+[36m@@ -1,90 +0,0 @@[m
+[31m-<?php[m
+[31m-session_start();[m
+[31m-[m
+[31m-if(isset($_SESSION['role'])){[m
+[31m-    $role=$_SESSION['role'];[m
+[31m-    if($role!='ADMIN'){[m
+[31m-        header('location: ../index.php');[m
+[31m-    } [m
+[31m-}else{[m
+[31m-    $role='';[m
+[31m-    if($role!='ADMIN'){[m
+[31m-        header('location: ../index.php');} [m
+[31m-}[m
+[31m-[m
+[31m-?>[m
+[31m-[m
+[31m-<!DOCTYPE html>[m
+[31m-<html lang="fr">[m
+[31m-[m
+[31m-<head>[m
+[31m-    <meta charset="UTF-8">[m
+[31m-    <meta name="viewport" content="width=device-width, initial-scale=1.0">[m
+[31m-    <?php include '../COMPONENTS/important_link.php' ?>[m
+[31m-    <link rel="stylesheet" href="../../CSS/index_admin.css">[m
+[31m-    <title>Accueil Admin</title>[m
+[31m-</head>[m
+[31m-[m
+[31m-<body>[m
+[31m-[m
+[31m-<?php include '../COMPONENTS/header.php' ?>[m
+[31m-[m
+[31m-    <h1>Utlisateurs</h1>[m
+[31m-[m
+[31m-    <div>[m
+[31m-        <div>[m
+[31m-            <div>[m
+[31m-                <div>[m
+[31m-                    <?php[m
+[31m-                require '../php/crud/connection.php';[m
+[31m-[m
+[31m-                $sql = "SELECT * FROM users";[m
+[31m-[m
+[31m-                if($result = mysqli_query($conn, $sql)){[m
+[31m-                    if(mysqli_num_rows($result)>0){[m
+[31m-                        echo '<table>';[m
+[31m-                            echo '<thead>';[m
+[31m-                                echo '<tr>';[m
+[31m-                                    echo '<th>ID</th>';[m
+[31m-                                    echo '<th>Adresse email</th>';[m
+[31m-                                    echo '<th>RÔle</th>';[m
+[31m-                                    echo '<th>Compte vérifié</th>';[m
+[31m-                                    echo '<th>Outils</th>';[m
+[31m-                                echo '</tr>';[m
+[31m-                            echo '</thead>';[m
+[31m-                            echo '<tbody>';[m
+[31m-[m
+[31m-                            while($row = mysqli_fetch_array($result)){[m
+[31m-                                echo '<tr>';[m
+[31m-                                    echo '<td>' . $row['id'] . '</td>';[m
+[31m-                                    echo '<td>' . $row['login'] . '</td>';[m
+[31m-                                    echo '<td>' . $row['role'] . '</td>';[m
+[31m-                                    echo '<td>' . $row['isVerified'] . '</td>';[m
+[31m-                                    echo '<td>';[m
+[31m-                                        echo '<a href="./update.php?id='.$row['id'].'" class="mr-3" title="update" data-toggle="tooltip"><span class="fas fa-pencil-alt"></span> </a>';[m
+[31m-                                        echo '<a href="./delete.php?id='.$row['id'].'" class="mr-3" title="update" data-toggle="tooltip"><span class="fa fa-trash"></span></a>';[m
+[31m-                                    echo '</td>';[m
+[31m-                                echo '</tr>';[m
+[31m-                            }[m
+[31m-                            echo '</tbody>';[m
+[31m-                        echo '</table>';[m
+[31m-[m
+[31m-                        }else{[m
+[31m-                            echo '<div class="alert alert-danger"><em>Aucun utilisateur trouvé.</em></div>';[m
+[31m-                        }[m
+[31m-                }else{[m
+[31m-                    echo '<div class="alert alert-danger"><em>Aucun utilisateur trouvé.</em></div>';[m
+[31m-                }[m
+[31m-                mysqli_close($conn);[m
+[31m-                ?>[m
+[31m-                </div>[m
+[31m-            </div>[m
+[31m-        </div>[m
+[31m-    </div>[m
+[31m-    <a href="../index.php">Retour Accueil</a>[m
+[31m-[m
+[31m-<?php include '../COMPONENTS/footer.php' ?>[m
+[31m-[m
+[31m-</body>[m
+[31m-[m
+[31m-</html>[m
+\ No newline at end of file[m
+[1mdiff --git a/css/cgu.css b/css/cgu.css[m
+[1mindex 6db4663..aa1a596 100644[m
+[1m--- a/css/cgu.css[m
+[1m+++ b/css/cgu.css[m
+[36m@@ -1,4 +1,13 @@[m
+[31m-body{[m
+[32m+[m[32mbody {[m
+     background-color: #6500CB;[m
+     font-family: Impact;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.cgu {[m
+[32m+[m[32m    display: flex;[m
+[32m+[m[32m    flex-direction: column;[m
+[32m+[m[32m    justify-content: center;[m
+[32m+[m[32m    align-items: center;[m
+[32m+[m[32m    margin: auto;[m
+[32m+[m[32m    width: 50%;[m
+ }[m
+\ No newline at end of file[m
+[1mdiff --git a/css/contact.css b/css/contact.css[m
+[1mindex f68f0cb..77d2628 100644[m
+[1m--- a/css/contact.css[m
+[1m+++ b/css/contact.css[m
+[36m@@ -84,12 +84,12 @@[m [mmain input{[m
+ .message_container textarea{[m
+     width: 100%;[m
+     background-color: #8B1EF8;[m
+[31m-    outline: none;[m
+     font-size: 20px;[m
+     text-align: center;[m
+     resize: none;[m
+ }[m
+ [m
+[32m+[m[41m[m
+ .button_container{[m
+     margin-top: 5%;[m
+     display: flex;[m
+[1mdiff --git a/css/index_admin.css b/css/index_admin.css[m
+[1mdeleted file mode 100644[m
+[1mindex e69de29..0000000[m
