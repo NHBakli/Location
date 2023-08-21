@@ -1,4 +1,13 @@
-body{
+body {
     background-color: #6500CB;
     font-family: Impact;
+}
+
+.cgu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    width: 50%;
 }

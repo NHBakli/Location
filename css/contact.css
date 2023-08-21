@@ -84,11 +84,11 @@ main input{
 .message_container textarea{
     width: 100%;
     background-color: #8B1EF8;
-    outline: none;
     font-size: 20px;
     text-align: center;
     resize: none;
 }
+
 
 .button_container{
     margin-top: 5%;
