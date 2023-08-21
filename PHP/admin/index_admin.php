@@ -42,12 +42,12 @@ if(isset($_SESSION['role'])){
 
                 if($result = mysqli_query($conn, $sql)){
                     if(mysqli_num_rows($result)>0){
-                        echo '<table class="table table-bordered table-striped">';
+                        echo '<table>';
                             echo '<thead>';
                                 echo '<tr>';
                                     echo '<th>ID</th>';
-                                    echo '<th>Login</th>';
-                                    echo '<th>Role</th>';
+                                    echo '<th>Adresse email</th>';
+                                    echo '<th>RÔle</th>';
                                     echo '<th>Compte vérifié</th>';
                                     echo '<th>Outils</th>';
                                 echo '</tr>';

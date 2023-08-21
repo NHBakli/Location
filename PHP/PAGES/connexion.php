@@ -23,7 +23,7 @@ session_start();
 <main>
     <form action="../CRUD/traitement.php" method="post">
         <div class="mail_container">
-            <input type="text" placeholder="Email" name="mail" required>
+            <input type="email" placeholder="Email" name="mail" required>
         </div>
         <div class="password_container">
             <input type="password" placeholder="Mot de passe" name="password" required>

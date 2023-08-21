@@ -1,4 +1,7 @@
 <?php
+
+session_start();
+
 require_once "../CRUD/connection.php";
 
 $nom = $pre = $mail = $mess ="";
