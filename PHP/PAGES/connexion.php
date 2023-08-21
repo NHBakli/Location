@@ -15,7 +15,7 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php include '../COMPONENTS/important_link.php' ?>
     <link rel="stylesheet" href="../../css/connexion.css">
-    <title>Document</title>
+    <title>Connexion</title>
 </head>
 <body>
 <?php include '../COMPONENTS/header.php' ?>
@@ -29,7 +29,7 @@ session_start();
             <input type="password" placeholder="Mot de passe" name="password" required>
         </div>
         <div class="button_container">
-            <button type="submit" name="submit" value="Enregistrer">S'inscrire</button>
+            <button type="submit" name="submit" value="Enregistrer">Connexion</button>
             <a href="../PAGES/inscription.php">Créer un compte</a>
         </div>
     </form>

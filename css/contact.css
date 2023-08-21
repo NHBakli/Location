@@ -87,9 +87,8 @@ main input{
     outline: none;
     font-size: 20px;
     text-align: center;
-    
+    resize: none;
 }
-
 
 .button_container{
     margin-top: 5%;

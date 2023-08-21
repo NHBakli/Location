@@ -54,7 +54,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // error_reporting(E_ALL);
             // $from = $mail;
             // $to = 'destinataire@domaine.com';
-            // $subject = 'Essai de PHP Mail';
             // $message = $mess;
             // $header = "De :" . $from;
             // mail($to, $subject, $message, $header);
