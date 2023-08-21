@@ -35,19 +35,19 @@ if(isset($_SESSION['role'])) {
     <?php endif ; ?>
 
     <li>
-        <a href="./contact.php">Contact</a>
+        <a href="../PAGES/contact.php">Contact</a>
     </li>
 
     <!-- Si le role de l'utilisateur est "ADMIN" alors on affiche la section Admin-->
     <?php if($role == 'ADMIN') : ?>
     <li >
-        <a href="../admin/index_admin.php">Admin</a>
+        <a href="../ADMIN/index_admin.php">Admin</a>
     </li>
     <?php endif ; ?>
 
     <?php if (isset($_SESSION['connect']) && $_SESSION['connect'] == 'ok') :  ?>
     <li >
-        <a href="./deconnexion.php">Déconnexion</a>
+        <a href="../PAGES/deconnexion.php">Déconnexion</a>
     </li>
     <?php endif ; ?>
 </ul>
