@@ -1,0 +1,23 @@
+ul{
+    background-color: grey;
+    display: flex;
+    justify-content: space-evenly;
+    width: 98.7%;
+    height: 50px;
+    margin-top: -0.4%;
+    margin-left: -0.4%;
+    align-items: center;
+}
+
+li{
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+    font-size: 25px;
+    font-family: Impact;
+}
+
+

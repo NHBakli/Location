@@ -1,0 +1,182 @@
+body{
+    background-color: #6500CB;
+    font-family: Impact;
+}
+
+main{
+    display: flex;
+    justify-content: center;
+}
+
+main ::placeholder{
+    color: white;
+}
+
+main input{
+    background-color: #8B1EF8;
+    border: 0px;
+    text-align: center;
+    font-size: 20px;
+    /* Sert a retirer le bordure quand on séléctionne le input */
+    outline: none;
+}
+
+.container{
+    margin-top: 2.5%;
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.container_top{
+    display: flex;
+    justify-content: space-around;
+margin-bottom: 3%;
+}
+
+.lastname_container input{
+    width: 70%;
+}
+
+.firstname_container input{
+    width: 70%;
+}
+
+.lastname_container{
+    display: flex;
+    justify-content: center;
+    width: 150%;
+    height: 65px;
+}
+
+.firstname_container{
+    display: flex;
+    justify-content: center;
+    width: 150%;
+    height: 65px;
+}
+
+.mail_container{
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+margin-bottom: 3%;
+    width: 85%;
+    height: 65px;
+}
+
+.mail_container input{
+    width: 100%;
+}
+
+.password_container{
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+margin-bottom: 3%;
+    width: 85%;
+    height: 65px;
+}
+
+.password_container input{
+    width: 100%;
+}
+
+.container_item_adress{
+    display: flex;
+    justify-content: space-around;
+margin-bottom: 3%;
+}
+
+
+.adress_code_container input{
+    width: 55%;
+}
+
+.adress_code_container{
+    display: flex;
+    justify-content: center;
+    width: 110%;
+    height: 65px;
+}
+
+.country_container{
+    display: flex;
+    justify-content: center;
+    width: 110%;
+    height: 65px;
+}
+
+.country_container input{
+    width: 55%;
+}
+
+.city_container{
+    display: flex;
+    justify-content: center;
+    width: 110%;
+    height: 65px;
+}
+
+.city_container input{
+    width: 55%;
+}
+
+.address_container{
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3%;
+    width: 85%;
+    height: 65px;
+}
+
+.address_container input{
+    width: 100%;
+}
+
+.birthday_container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.birthday_container label{
+    font-size: 20px;
+    background-color: #8B1EF8;
+    color: white;
+}
+
+.button_container{
+    margin-top: 3%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.button_container button{
+    width: 35%;
+    height: 70px;
+    border-radius: 80px;
+    font-size: 20px;
+    color: white;
+    background-color: #8B1EF8;
+    border: 0px;
+    outline: none;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2%;
+}
+
+.container a{
+    font-size: 18px;
+    color: white;
+    text-decoration: underline;
+    margin-left: auto;
+    margin-right: auto;
+}
