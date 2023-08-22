@@ -6,6 +6,7 @@ if(isset($_POST['submit'])){
     if(isset($_POST['mail']) && isset($_POST['password'])) {
         $email = $_POST['mail'];
         $password = $_POST['password'];
+        $id = $_POST['id'];
         $erreur = "";
 
         include_once "../CRUD/connection.php";
@@ -19,6 +20,7 @@ if(isset($_POST['submit'])){
                 $_SESSION['email'] = $email;
                 $_SESSION['users'] = 'ok';
                 $_SESSION['role'] = $user['role'];
+                $_SESSION['id'] = $user['id'];
                 header("Location: ../../index.php");
                 exit();
             } else {

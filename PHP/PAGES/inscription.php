@@ -96,7 +96,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             if (mysqli_stmt_execute($stmt_clients)) {
                 // Success
                 mysqli_close($connection);
-                header("location: ../PAGES/accueil.php");
+                header("location: ../PAGES/connexion.php");
                 exit();
             } else {
                 echo "Erreur lors de l'insertion dans la table .";
