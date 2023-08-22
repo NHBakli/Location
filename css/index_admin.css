@@ -1,3 +1,33 @@
 body{
     background-color: #6500CB;
+    text-align: center;
+}
+
+h1{
+    text-decoration: underline;
+}
+
+table {
+    background-color: white;
+    font-family: Impact;
+    font-size: 1.2em;
+    border: 1px solid black;
+    border-collapse: collapse;
+    margin: auto;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 20px;
+}
+
+tr:nth-child(even){
+    background-color: grey;
+}
+
+thead {
+    background-color: black;
+    color: white;
+    border: 1px soid black;
+    border-collapse: collapse;
 }
