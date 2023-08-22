@@ -5,7 +5,6 @@ session_start();
 require_once "../CRUD/connection.php";
 require_once "../CRUD/protected.php";
 
-
 $nom = $pre = $mail = $mess = $password = $country = $city = $code = $address ="";
 $nom_err = $pre_err = $mail_err = $err_mess = $err_password = $err_country = $err_city = $err_code = $err_address ="";
 

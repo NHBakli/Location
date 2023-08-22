@@ -1,5 +1,19 @@
 <?php
+
 session_start();
+
+if (isset($_SESSION['role'])) {
+    $role = $_SESSION['role'];
+    if ($role != 'ADMIN') {
+        header('location: ../../index.php');
+    }
+} else {
+    $role = '';
+    if ($role != 'ADMIN') {
+        header('location: ../../index.php');
+    }
+}
+
 require '../CRUD/connection.php';
 
 $login = $role = '';
@@ -27,9 +41,9 @@ if (isset($_POST['id']) && !empty(trim($_POST['login']))) {
 
     if (empty($login_err) && empty($role_err)) {
 
-        $sql = 'UPDATE users SET LOGIN=?, ROLE=? where id=?';
+        $sql = 'UPDATE users SET login=?, role=? WHERE id=?';
 
-        if ($stmt = mysqli_prepare($conn, $sql)) {
+        if ($stmt = mysqli_prepare($connection, $sql)) {
             mysqli_stmt_bind_param($stmt, 'ssi', $param_login, $param_role, $param_id);
 
             $param_login = $login;
@@ -40,13 +54,13 @@ if (isset($_POST['id']) && !empty(trim($_POST['login']))) {
                 header("location: ./index_admin.php");
                 exit();
             } else {
-                echo "Oops ! Erreur inattendu, rééssayez plus tard !!!";
+                echo "Erreur de modification";
             }
         }
     }
     mysqli_close($connection);
 } else {
-    
+
     if (isset($_GET['id']) && !empty($_GET['id'])) {
         $id = trim($_GET['id']);
 
@@ -85,43 +99,27 @@ if (isset($_POST['id']) && !empty(trim($_POST['login']))) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-    .wrapper {
-        width: 600px;
-        margin: 0 auto;
-    }
-    </style>
-    <title>Document</title>
+    <title>Modification d'un utilisateur</title>
 </head>
 
 <body>
-    <div class="wrapper">
-        <div class="container-fluid">
+    <div>
+        <div>
             <div class="row">
-                <div class="col-md-12">
-                    <h2 class="mt-5">Mise à jour de l'utilisateur
-                        <?php
-                        if(!empty($mail)){
-                            echo $mail;
-                        }
-                        ?>
-                    </h2>
+                <div>
+                    <h2>Modification de l'utilisateur <?php if (!empty($mail)) {
+                                                                        echo $mail;
+                                                                    } ?></h2>
                 </div>
-                <p>Changez les valeurs et validez</p><br><br>
                 <form action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']); ?>" method="post">
                     <div class="form-group">
-                        <label>Pseudo</label>
-                        <input type="email" name="login"
-                            class="form-control <?php echo (!empty($login_err)) ? 'is-invalid' : ''; ?>"
-                            value="<?php echo $mail; ?>" required></input>
+                        <label>Login</label>
+                        <input type="email" name="login" class="form-control <?php echo (!empty($login_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $mail; ?>" required></input>
                         <span class="invalid-feedback"><?php echo $login_err; ?></span>
                     </div>
                     <div class="form-group">
                         <label>Role</label>
-                        <input type="text" name="role"
-                            class="form-control <?php echo (!empty($role_err)) ? 'is-invalid' : ''; ?>"
-                        value="<?php echo $role; ?>" required></input>
+                        <input type="text" name="role" class="form-control <?php echo (!empty($role_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $role; ?>" required></input>
                         <span class="invalid-feedback"><?php echo $role_err; ?></span>
                     </div>
                     <input type="hidden" name="id" value="<?php echo $id; ?>" />
