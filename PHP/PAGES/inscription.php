@@ -127,6 +127,7 @@ mysqli_stmt_close($stmt_users);
 <?php include '../COMPONENTS/header.php' ?>
 
 <main>
+    
     <div class="container">
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"  method="post" class="inscription">
             <div class="container_top">
@@ -165,7 +166,7 @@ mysqli_stmt_close($stmt_users);
     </div>
 </main>
 
-
 <?php include '../COMPONENTS/footer.php' ?>
+
 </body>
 </html>

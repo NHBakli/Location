@@ -82,7 +82,7 @@ if (isset($_POST['id']) && !empty(trim($_POST['login']))) {
                     $id = $row['id'];
                 }
             } else {
-                echo "Oops ! erreur inattendu, réésayer plous tard !!!";
+                echo "Erreur de modification";
             }
         } else {
             header('location: ./index_admin.php');
@@ -90,6 +90,7 @@ if (isset($_POST['id']) && !empty(trim($_POST['login']))) {
         }
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -103,31 +104,28 @@ if (isset($_POST['id']) && !empty(trim($_POST['login']))) {
 </head>
 
 <body>
+
     <div>
         <div>
-            <div class="row">
-                <div>
-                    <h2>Modification de l'utilisateur <?php if (!empty($mail)) {
-                                                                        echo $mail;
-                                                                    } ?></h2>
-                </div>
-                <form action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']); ?>" method="post">
-                    <div class="form-group">
-                        <label>Login</label>
-                        <input type="email" name="login" class="form-control <?php echo (!empty($login_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $mail; ?>" required></input>
-                        <span class="invalid-feedback"><?php echo $login_err; ?></span>
-                    </div>
-                    <div class="form-group">
-                        <label>Role</label>
-                        <input type="text" name="role" class="form-control <?php echo (!empty($role_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $role; ?>" required></input>
-                        <span class="invalid-feedback"><?php echo $role_err; ?></span>
-                    </div>
-                    <input type="hidden" name="id" value="<?php echo $id; ?>" />
-                    <input type="submit" class="btn btn-primary" value="Enregistrer">
-                    <a href="./index_admin.php" class="btn btn-secondary ml-2">Annuler</a>
-                </form>
-            </div>
+            <h2>Modification de l'utilisateur <?php if (!empty($mail)) {
+                                                    echo $mail;
+                                                } ?></h2>
         </div>
+        <form action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']); ?>" method="post">
+            <div>
+                <label>Login</label>
+                <input type="email" name="login" class="form-control <?php echo (!empty($login_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $mail; ?>" required></input>
+                <span class="invalid-feedback"><?php echo $login_err; ?></span>
+            </div>
+            <div class="form-group">
+                <label>Role</label>
+                <input type="text" name="role" class="form-control <?php echo (!empty($role_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $role; ?>" required></input>
+                <span class="invalid-feedback"><?php echo $role_err; ?></span>
+            </div>
+            <input type="hidden" name="id" value="<?php echo $id; ?>" />
+            <input type="submit" class="btn btn-primary" value="Enregistrer">
+            <a href="./index_admin.php" class="btn btn-secondary ml-2">Annuler</a>
+        </form>
     </div>
 
 </body>

@@ -18,35 +18,32 @@ require '../CRUD/connection.php';
 
 $id = $_GET['id'];
 
-if (isset($_POST['id']) && !empty($_POST['id'])){
-   
+if (isset($_POST['id']) && !empty($_POST['id'])) {
+
     $sql = "DELETE FROM users WHERE id=?";
 
-    if ($stmt = mysqli_prepare($connection, $sql)){
+    if ($stmt = mysqli_prepare($connection, $sql)) {
         mysqli_stmt_bind_param($stmt, "i", $param_id);
 
         $param_id = trim($_POST['id']);
 
-        if(mysqli_stmt_execute($stmt)){
+        if (mysqli_stmt_execute($stmt)) {
             header("Location: ./index_admin.php");
             exit();
-        }else{
+        } else {
             echo "Erreur de suppression";
         }
     }
     mysqli_close($connection);
-}else{
- 
-    if(empty(trim($_GET['id']))){
+} else {
+
+    if (empty(trim($_GET['id']))) {
         header('Location: ./index_admin.php');
         exit();
     }
 }
 
-
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -56,10 +53,10 @@ if (isset($_POST['id']) && !empty($_POST['id'])){
     <title>Suppression d'un utilisateur</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-    .wrapper {
-        width: 600px;
-        margin: 0 auto;
-    }
+        .wrapper {
+            width: 600px;
+            margin: 0 auto;
+        }
     </style>
 </head>
 

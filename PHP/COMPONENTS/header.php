@@ -38,10 +38,13 @@ if(isset($_SESSION['role'])) {
         <a href="../PAGES/contact.php">Contact</a>
     </li>
 
-    <!-- Si le role de l'utilisateur est "ADMIN" alors on affiche la section Admin-->
+    <!-- Si le role de l'utilisateur est "ADMIN" alors on affiche les sections Admin-->
     <?php if($role == 'ADMIN') : ?>
     <li >
-        <a href="../ADMIN/index_admin.php">Admin</a>
+        <a href="../ADMIN/index_admin.php">Admin utilisateurs</a>
+    </li>
+    <li >
+        <a href="#">Admin véhicules</a>
     </li>
     <?php endif ; ?>
 
