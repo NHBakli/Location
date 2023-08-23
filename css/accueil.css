@@ -1,3 +1,15 @@
 body{
     background-color: #6500CB;
 }
+
+.cars{
+    background-color: #8B1EF8;
+    text-align: center;
+    width: 50%;
+    margin: auto;
+}
+
+.card{
+    background-color: #8B1EF8;
+    border: 5px solid black;
+}

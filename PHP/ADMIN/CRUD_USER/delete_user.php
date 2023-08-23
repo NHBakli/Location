@@ -14,7 +14,7 @@ if (isset($_SESSION['role'])) {
     }
 }
 
-require '../CRUD/connection.php';
+require '../../CRUD/connection.php';
 
 $id = $_GET['id'];
 

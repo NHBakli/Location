@@ -41,7 +41,7 @@ if(isset($_SESSION['role'])) {
     <!-- Si le role de l'utilisateur est "ADMIN" alors on affiche les sections Admin-->
     <?php if($role == 'ADMIN') : ?>
     <li >
-        <a href="../ADMIN/index_admin.php">Admin</a>
+        <a href="../ADMIN/INDEX/index_admin.php">Admin</a>
     </li>
 
     <?php endif ; ?>

@@ -22,20 +22,20 @@ if (isset($_SESSION['role'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../CSS/admin.css">
+    <link rel="stylesheet" href="../../../CSS/admin.css">
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
-    <?php include '../COMPONENTS/important_link.php' ?>
+    <?php include '../../COMPONENTS/important_link.php' ?>
     <title>Accueil Admin utilisateurs</title>
 </head>
 
 <body>
 
-    <?php include '../COMPONENTS/header.php' ?>
+    <?php include '../ADMIN_COMPONENTS/header_admin.php' ?>
 
     <h1>Utlisateurs :</h1>
 
     <?php
-    require '../CRUD/connection.php';
+    require '../../CRUD/connection.php';
 
     $sql = "SELECT * FROM users";
 
@@ -76,7 +76,8 @@ if (isset($_SESSION['role'])) {
     mysqli_close($connection);
     ?>
 
-    <?php include '../COMPONENTS/footer.php' ?>
+    <?php include '../../COMPONENTS/footer.php' ?>
+    <!-- LIENS DU FOOTER HS -->
 
 </body>
 

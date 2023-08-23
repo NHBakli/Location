@@ -1,20 +1,3 @@
-<?php
-session_start();
-
-if(isset($_SESSION['users'])) {
-    $_SESSION['connect'] = 'ok'; // on récup "ok"
-}else{
-    unset($_SESSION['connect']);
-}
-
-if(isset($_SESSION['role'])) { 
-    $role = $_SESSION['role'];
-}else{
-    $role = '';
-}
-?>
-
-
 <header>
 
 <ul>
@@ -23,19 +6,19 @@ if(isset($_SESSION['role'])) {
     <?php if($role == 'ADMIN') : ?>
 
     <li >
-        <a href="../../index.php">Retournez à l'accueil</a>
+        <a href="../../../index.php">Retour Accueil</a>
     </li>
 
     <li >
-        <a href="../../ADMIN/index_admin.php">Admin Accueil</a>
+        <a href="../INDEX/index_admin.php">Accueil Admin</a>
     </li>
 
     <li >
-        <a href="../ADMIN/CRUD_users/pannel_users.php">Pannel Users</a>
+        <a href="../CRUD_USER/admin_user.php">Admin Utilisateurs</a>
     </li>
 
     <li >
-        <a href="../ADMIN/CRUD_Vehicule/pannel_vehicule.php">Pannel Vehicule</a>
+        <a href="../CRUD_VEHICLE/admin_vehicle.php">Admin Vehicules</a>
     </li>
     <?php endif ; ?>
 
