@@ -37,7 +37,7 @@ if (mysqli_query($connection,$sql)){
 
 $sql = "CREATE TABLE IF NOT EXISTS vehicles (
     id int(10) auto_increment PRIMARY KEY NOT NULL, 
-    picture VARCHAR(1000) NOT NULL, 
+    picture VARCHAR(256) NOT NULL, 
     marque VARCHAR(128) NOT NULL,
     modele VARCHAR(128) NOT NULL,
     puissance VARCHAR(128) NOT NULL,

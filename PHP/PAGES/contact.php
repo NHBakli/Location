@@ -3,8 +3,7 @@ session_start();
 require_once "../CRUD/connection.php";
 
 $nom = $pre = $mail = $mess ="";
-$nom_err = $pre_err = $mail_err 
-= $err_mess ="";
+$nom_err = $pre_err = $mail_err = $mess_err ="";
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 
