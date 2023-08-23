@@ -7,7 +7,7 @@ if(isset($_SESSION['users'])) {
     unset($_SESSION['connect']);
 }
 
-if(isset($_SESSION['role'])) {
+if(isset($_SESSION['role'])) { 
     $role = $_SESSION['role'];
 }else{
     $role = '';
@@ -31,11 +31,11 @@ if(isset($_SESSION['role'])) {
     </li>
 
     <li >
-        <a href="../ADMIN/PAGES_ADMIN/pannel_users.php">Pannel Users</a>
+        <a href="../ADMIN/CRUD_users/pannel_users.php">Pannel Users</a>
     </li>
 
     <li >
-        <a href="../ADMIN/PAGES_ADMIN/pannel_vehicule.php">Pannel Vehicule</a>
+        <a href="../ADMIN/CRUD_Vehicule/pannel_vehicule.php">Pannel Vehicule</a>
     </li>
     <?php endif ; ?>
 

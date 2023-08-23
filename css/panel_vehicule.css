@@ -1,0 +1,19 @@
+body{
+    background-color: #6500CB;
+}
+
+main{
+    display: flex;
+    justify-content: center;
+}
+
+.categorie{
+    display: flex;
+    justify-content: center;
+    justify-content: space-evenly;
+    background-color: #8B1EF8;
+    width: 45%;
+}
+
+.categorie p{
+}
