@@ -6,6 +6,7 @@ if(isset($_POST['submit'])){
     if(isset($_POST['mail']) && isset($_POST['password'])) {
         $email = $_POST['mail'];
         $password = $_POST['password'];
+        $id = $_POST['id'];
         $erreur = "";
 
         include_once "../CRUD/connection.php";
@@ -19,6 +20,7 @@ if(isset($_POST['submit'])){
                 $_SESSION['email'] = $email;
                 $_SESSION['users'] = 'ok';
                 $_SESSION['role'] = $user['role'];
+                $_SESSION['id'] = $user['id'];
                 header("Location: ../../index.php");
                 exit();
             } else {
@@ -39,7 +41,7 @@ if(isset($_POST['submit'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php include '../COMPONENTS/important_link.php' ?>
     <link rel="stylesheet" href="../../css/connexion.css">
-    <title>Document</title>
+    <title>Connexion</title>
 </head>
 <body>
 <?php include '../COMPONENTS/header.php'; ?>
