@@ -60,8 +60,8 @@ if (isset($_SESSION['role'])) {
                 echo '<td>' . $row['role'] . '</td>';
                 echo '<td>' . $row['isVerified'] . '</td>';
                 echo '<td>';
-                echo '<a href="./update.php?id=' . $row['id'] . '"><iconify-icon icon="material-symbols:edit"></iconify-icon> </a>';
-                echo '<a href="./delete.php?id=' . $row['id'] . '"><iconify-icon icon="ic:baseline-delete"></iconify-icon></a>';
+                echo '<a href="./update_user.php?id=' . $row['id'] . '"><iconify-icon icon="material-symbols:edit"></iconify-icon> </a>';
+                echo '<a href="./delete_user.php?id=' . $row['id'] . '"><iconify-icon icon="ic:baseline-delete"></iconify-icon></a>';
                 echo '</td>';
                 echo '</tr>';
             }

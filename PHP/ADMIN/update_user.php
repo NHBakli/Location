@@ -124,7 +124,7 @@ if (isset($_POST['id']) && !empty(trim($_POST['login']))) {
             </div>
             <input type="hidden" name="id" value="<?php echo $id; ?>" />
             <input type="submit" class="btn btn-primary" value="Enregistrer">
-            <a href="./index_admin.php" class="btn btn-secondary ml-2">Annuler</a>
+            <a href="./admin_user.php">Annuler</a>
         </form>
     </div>
 
