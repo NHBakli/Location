@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -8,7 +10,7 @@
     <title>Pannel Users</title>
 </head>
 <body>
-<?php include '../../ADMIN/ADMIN_COMPONENTS/header_admin.php' ?>
+<?php include '../ADMIN_COMPONENTS/header_admin.php' ?>
 
 
 <?php include '../../COMPONENTS/footer.php' ?>

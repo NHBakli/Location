@@ -49,7 +49,39 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     mysqli_close($connection);
 }
+
+
+$sql = "SELECT * FROM clients";
+
+if ($result_clients = mysqli_query($connection, $sql)) {
+    if (mysqli_num_rows($result_clients) > 0) {
+        $row = mysqli_fetch_array($result_clients);
+
+        $input_nom = $row['firstname'];
+        $input_prenom = $row['lastname'];
+        $input_address = $row['address'];
+        $input_ville = $row['city'];
+        $input_cp = $row['postal_code'];
+        $input_country = $row['country'];
+    }
+}
+
+
+$sql_users = "SELECT login FROM users";
+
+if ($result_users = mysqli_query($connection, $sql_users)) {
+    if (mysqli_num_rows($result_users) > 0) {
+        $row_users = mysqli_fetch_array($result_users);
+
+        $input_email = $row_users['login'];
+    }
+}
+
+mysqli_close($connection);
+
+
 ?>
+
 
 
 <!DOCTYPE html>
@@ -69,27 +101,27 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"  method="post" class="update">
             <div class="container_top">
                 <div class="firstname_container">
-                    <input type="text" placeholder="Nom" name="nom" >
+                    <input type="text" placeholder="Nom" name="nom" value="<?= $input_nom ?>">
                 </div>
                 <div class="lastname_container">
-                    <input type="text" placeholder="Prénom" name="prenom" >
+                    <input type="text" placeholder="Prénom" name="prenom" value="<?= $input_prenom ?>">
                 </div> 
             </div>
             <div class="mail_container">
-                    <input type="email" placeholder="Email" name="email" >
+                    <input type="email" placeholder="Email" name="email" value="<?= $input_email ?>">
                 </div> 
             <div class="container_item_adress">
                 <div class="address_container">
-                    <input type="text" placeholder="Adresse" name="address" >
+                    <input type="text" name="address" value="<?= $input_address?>">
                 </div>
                 <div class="city_container">
-                    <input type="text" placeholder="Ville" name="city" >
+                    <input type="text" placeholder="Ville" name="city" value="<?= $input_ville ?>">
                 </div>
                 <div class="adress_code_container">
-                    <input type="text" placeholder="Code postal" name="code" >
+                    <input type="text" placeholder="Code postal" name="code" value="<?= $input_cp ?>">
                 </div> 
                 <div class="country_container">
-                    <input type="text" placeholder="Pays" name="country" >
+                    <input type="text" placeholder="Pays" name="country" value="<?= $input_country ?>">
                 </div>
             </div> 
             <div class="button_container">

@@ -22,19 +22,19 @@ if(isset($_SESSION['role'])) {
     <?php if($role == 'ADMIN') : ?>
 
     <li >
-        <a href="../../index.php">Retournez à l'accueil</a>
+        <a href="../../../index.php">Retournez à l'accueil</a>
     </li>
 
     <li >
-        <a href="../../ADMIN/index_admin.php">Admin Accueil</a>
+        <a href="../index_admin/index_admin.php">Admin Accueil</a>
     </li>
 
     <li >
-        <a href="../ADMIN/CRUD_users/pannel_users.php">Pannel Users</a>
+        <a href="../CRUD_users/pannel_users.php">Pannel Users</a>
     </li>
 
     <li >
-        <a href="../ADMIN/CRUD_Vehicule/index_vehicule.php">Pannel Vehicule</a>
+        <a href="../CRUD_Vehicule/index_vehicule.php">Pannel Vehicule</a>
     </li>
     <?php endif ; ?>
 

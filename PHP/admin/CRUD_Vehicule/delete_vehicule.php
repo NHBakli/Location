@@ -83,7 +83,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
                             <p>Êtes vous sûr de vouloir supprimer cet utilisateur ?</p>
                             <p>
                                 <input type="submit" value="Oui">
-                                <a href="./admin_vehicle.php">Non</a>
+                                <a href="./index_vehicule.php">Non</a>
                             </p>
                         </div>
                     </form>

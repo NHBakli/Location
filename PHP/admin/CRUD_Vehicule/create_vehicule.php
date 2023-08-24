@@ -156,6 +156,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="text" name="tva" placeholder="TVA">
 
             <button>valider</button>
+            <a href="./index_vehicule.php">Annuler</a>
         </form>
     </div>
 </main>
