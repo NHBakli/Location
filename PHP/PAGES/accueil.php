@@ -16,9 +16,12 @@ session_start();
 </head>
 
 <body>
+    
     <?php include '../COMPONENTS/header.php' ?>
 
     <h1>Accueil</h1>
+
+    <h2>Véhicules de location disponibles</h2>
 
     <?php
 
