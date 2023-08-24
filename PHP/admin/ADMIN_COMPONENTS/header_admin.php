@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 if(isset($_SESSION['users'])) {
     $_SESSION['connect'] = 'ok'; // on récup "ok"
@@ -35,7 +34,7 @@ if(isset($_SESSION['role'])) {
     </li>
 
     <li >
-        <a href="../ADMIN/CRUD_Vehicule/pannel_vehicule.php">Pannel Vehicule</a>
+        <a href="../ADMIN/CRUD_Vehicule/index_vehicule.php">Pannel Vehicule</a>
     </li>
     <?php endif ; ?>
 

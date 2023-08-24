@@ -1,3 +1,19 @@
+<?php session_start(); 
+
+if (isset($_SESSION['role'])) {
+    $role = $_SESSION['role'];
+    if ($role != 'ADMIN') {
+        header('location: ../../index.php');
+    }
+} else {
+    $role = '';
+    if ($role != 'ADMIN') {
+        header('location: ../../index.php');
+    }
+}?>
+
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
