@@ -5,12 +5,12 @@ session_start();
 if (isset($_SESSION['role'])) {
     $role = $_SESSION['role'];
     if ($role != 'ADMIN') {
-        header('location: ../../index.php');
+        header('location: ../../../index.php');
     }
 } else {
     $role = '';
     if ($role != 'ADMIN') {
-        header('location: ../../index.php');
+        header('location: ../../../index.php');
     }
 }
 
@@ -28,9 +28,7 @@ if (isset($_SESSION['role'])) {
 <body>
 <?php include '../ADMIN_COMPONENTS/header_admin.php' ?>
 
-<h1>Contenu au choix...</h1>
+<h1>Accueil Admin</h1>
 
-<?php include '../../COMPONENTS/footer.php' ?>
-<!-- LIENS DU FOOTER HS -->
 </body>
 </html>

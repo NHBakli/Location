@@ -5,12 +5,12 @@ session_start();
 if (isset($_SESSION['role'])) {
     $role = $_SESSION['role'];
     if ($role != 'ADMIN') {
-        header('location: ../../index.php');
+        header('location: ../../../index.php');
     }
 } else {
     $role = '';
     if ($role != 'ADMIN') {
-        header('location: ../../index.php');
+        header('location: ../../../index.php');
     }
 }
 
@@ -28,7 +28,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
         $param_id = trim($_POST['id']);
 
         if (mysqli_stmt_execute($stmt)) {
-            header("Location: ./index_admin.php");
+            header("Location: ./admin_user.php");
             exit();
         } else {
             echo "Erreur de suppression";
@@ -38,7 +38,7 @@ if (isset($_POST['id']) && !empty($_POST['id'])) {
 } else {
 
     if (empty(trim($_GET['id']))) {
-        header('Location: ./index_admin.php');
+        header('Location: ./admin_user.php');
         exit();
     }
 }

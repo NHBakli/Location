@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../css/espace_clients.css">
+    <link rel="stylesheet" href="../../css/espace_client.css">
     <script src="../../JS/script.js" defer></script>
     <?php include '../COMPONENTS/important_link.php' ?>
     <title>Espace Client</title>

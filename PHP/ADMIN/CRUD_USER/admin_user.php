@@ -14,6 +14,8 @@ if (isset($_SESSION['role'])) {
     }
 }
 
+unset($_SESSION['userupdate']);
+
 ?>
 
 <!DOCTYPE html>
@@ -75,9 +77,6 @@ if (isset($_SESSION['role'])) {
     }
     mysqli_close($connection);
     ?>
-
-    <?php include '../../COMPONENTS/footer.php' ?>
-    <!-- LIENS DU FOOTER HS -->
 
 </body>
 
