@@ -15,8 +15,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $input_cp = trim($_POST["code"]);
     $input_ville = trim($_POST["city"]);
     $input_country = trim($_POST["country"]);
+    $input_email = trim($_POST["email"]);
 
-    $recup = $_SESSION['id'];
+
+    $update_email = "UPDATE users SET login=? WHERE id=?";
+    $update_email_stmt = mysqli_prepare($connection, $update_email);
+    mysqli_stmt_bind_param($update_email_stmt, "si", $input_email, $_SESSION['id']);
+
     $sql = "UPDATE clients SET firstname=?, lastname=?, address=?, postal_code=?, city=?, country = ? WHERE user_id=?";
 
     if ($stmt = mysqli_prepare($connection, $sql)) {
@@ -31,13 +36,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $param_user_id = $_SESSION['id'];
 
         if(mysqli_stmt_execute($stmt)){
+            if(mysqli_stmt_execute($update_email_stmt)){
             header("location: ./espace_client.php");
             exit();
+            }
         } else { 
             echo "Oops ! Une erreur est survenue, veuillez réessayer plus tard.";
         }
 
-        mysqli_stmt_close($stmt);
+        mysqli_stmt_close($stmt, $update_email_stmt);
     }
 
     mysqli_close($connection);
@@ -68,6 +75,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <input type="text" placeholder="Prénom" name="prenom" >
                 </div> 
             </div>
+            <div class="mail_container">
+                    <input type="email" placeholder="Email" name="email" >
+                </div> 
             <div class="container_item_adress">
                 <div class="address_container">
                     <input type="text" placeholder="Adresse" name="address" >
