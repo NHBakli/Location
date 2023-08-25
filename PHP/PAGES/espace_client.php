@@ -45,14 +45,14 @@ if(isset($_SESSION['id'])) {
                     <img src="../../IMG/user.png" alt="user">
                 </div>
                 <div class="name_container">
-                    <p>Nom : <?php echo $user_data['lastname'];?></p>
-                    <p>Prénom : <?php echo $user_data['firstname'];?></p>
+                    <p>Nom : <?= $user_data['lastname'];?></p>
+                    <p>Prénom : <?= $user_data['firstname'];?></p>
                 </div>
                 <div class="container_information">
-                    <p>Adresse : <?php echo $user_data['address'];?></p>
-                    <p>Ville : <?php echo $user_data['city'];?></p>
-                    <p>Code postal : <?php echo $user_data['postal_code'];?></p>
-                    <p>Email : <?php echo $user_data['login'];?></p">
+                    <p>Adresse : <?= $user_data['address'];?></p>
+                    <p>Ville : <?= $user_data['city'];?></p>
+                    <p>Code postal : <?= $user_data['postal_code'];?></p>
+                    <p>Email : <?= $user_data['login'];?></p">
                 </div>
                 <div class="button_modified">
                 <button type="submit" class="modified" name="modified" value="Enregistrer"><a href="./espace_client_update.php">Modifier</a></button>

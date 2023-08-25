@@ -30,7 +30,7 @@ if(isset($_SESSION['role'])) {
     </li>
 
     <li >
-        <a href="../CRUD_users/pannel_users.php">Pannel Users</a>
+        <a href="../CRUD_users/index_user.php">Pannel Users</a>
     </li>
 
     <li >

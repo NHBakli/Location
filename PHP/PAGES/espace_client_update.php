@@ -44,36 +44,53 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             echo "Oops ! Une erreur est survenue, veuillez réessayer plus tard.";
         }
 
-        mysqli_stmt_close($stmt, $update_email_stmt);
+    mysqli_stmt_close($stmt);
+    mysqli_stmt_close($update_email_stmt);
     }
 
     mysqli_close($connection);
 }
 
 
-$sql = "SELECT * FROM clients";
+$sql = "SELECT * FROM clients WHERE user_id=?";
 
-if ($result_clients = mysqli_query($connection, $sql)) {
-    if (mysqli_num_rows($result_clients) > 0) {
-        $row = mysqli_fetch_array($result_clients);
-
-        $input_nom = $row['firstname'];
-        $input_prenom = $row['lastname'];
-        $input_address = $row['address'];
-        $input_ville = $row['city'];
-        $input_cp = $row['postal_code'];
-        $input_country = $row['country'];
+if ($result_clients = mysqli_prepare($connection, $sql)){
+    if(mysqli_stmt_bind_param($result_clients, "i", $param_id)){
+        $id = $_SESSION["id"];
+        $param_id = $id;
+        if(mysqli_stmt_execute($result_clients)){
+            $result = mysqli_stmt_get_result($result_clients);
+            if(mysqli_num_rows($result) == 1){
+                $row = mysqli_fetch_array($result, MYSQLI_ASSOC);            
+    
+                $input_nom = $row['firstname'];
+                $input_prenom = $row['lastname'];
+                $input_address = $row['address'];
+                $input_ville = $row['city'];
+                $input_cp = $row['postal_code'];
+                $input_country = $row['country'];    
+            }
+            else{echo "Il y en a plusieurs !";}   
+        }
     }
 }
 
 
-$sql_users = "SELECT login FROM users";
+$sql = "SELECT * FROM users WHERE id=?";
 
-if ($result_users = mysqli_query($connection, $sql_users)) {
-    if (mysqli_num_rows($result_users) > 0) {
-        $row_users = mysqli_fetch_array($result_users);
+if ($result_clients = mysqli_prepare($connection, $sql)){
+    if(mysqli_stmt_bind_param($result_clients, "i", $param_id)){
+        $id = $_SESSION["id"];
+        $param_id = $id;
+        if(mysqli_stmt_execute($result_clients)){
+            $result = mysqli_stmt_get_result($result_clients);
+            if(mysqli_num_rows($result) == 1){
+                $row = mysqli_fetch_array($result, MYSQLI_ASSOC);            
 
-        $input_email = $row_users['login'];
+                $input_email = $row['login'];    
+            }
+            else{echo "Il y en a plusieurs !";}   
+        }
     }
 }
 
@@ -100,15 +117,15 @@ mysqli_close($connection);
     <div class="container_input">
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"  method="post" class="update">
             <div class="container_top">
-                <div class="firstname_container">
-                    <input type="text" placeholder="Nom" name="nom" value="<?= $input_nom ?>">
-                </div>
                 <div class="lastname_container">
                     <input type="text" placeholder="Prénom" name="prenom" value="<?= $input_prenom ?>">
                 </div> 
+                <div class="firstname_container">
+                    <input type="text" placeholder="Nom" name="nom" value="<?= $input_nom ?>">
+                </div>
             </div>
             <div class="mail_container">
-                    <input type="email" placeholder="Email" name="email" value="<?= $input_email ?>">
+                    <input type="email" placeholder="Email" name="email" value="<?= $input_email?>">
                 </div> 
             <div class="container_item_adress">
                 <div class="address_container">

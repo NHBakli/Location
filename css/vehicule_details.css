@@ -7,18 +7,71 @@ img{
 }
 
 main p, h1{
-    color: white;
+    color: black;
 }
 
 main{
     display: flex;
     flex-direction: column;
+    margin-top: 3%;
 }
 
 .name_container{
     display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    width: 10%;
 }
 
 .name_container p{
-    margin-right: 0.5%;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.name_container p{
+    margin-right: 4%;
+}
+
+
+.picture_container{
+    margin-top: 2%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.informations, .price_container{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2%;
+}
+
+.informations{
+    width: 21%;
+}
+
+.informations p{
+    margin-top: 2%;
+}
+
+.informations span{
+    font-weight: bold;
+}
+
+.location{
+    margin-top: 2%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.location h2, input, button{
+    margin-top: 4%;
+}
+
+.location form{
+    display: flex;
+    align-items: center;
+}
+
+.location input{
+    margin-right: 20%;
 }

@@ -34,6 +34,20 @@ if (mysqli_query($connection,$sql)){
     mysqli_error($connection,$sql);
 }
 
+$sql = "CREATE TABLE IF NOT EXISTS location(
+    id int(10) auto_increment PRIMARY KEY NOT NULL, 
+    user_id int(10) NULL,
+    vehicles_id int(10) NULL,
+    start_location VARCHAR(128) NULL,
+    end_location VARCHAR(128) NULL
+    )"; 
+
+if (mysqli_query($connection,$sql)){
+    echo '<br> Les tables ont été créée avec succès ! </br>';
+}else{
+    mysqli_error($connection,$sql);
+}
+
 
 $sql = "CREATE TABLE IF NOT EXISTS vehicles (
     id int(10) auto_increment PRIMARY KEY NOT NULL, 

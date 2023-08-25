@@ -32,6 +32,9 @@ if(isset($_SESSION['role'])) {
     <li>
         <a href="../PAGES/espace_client.php">Espace Client</a>
     </li>
+    <li>
+        <a href="../PAGES/location.php">Location</a>
+    </li>
     <?php endif ; ?>
 
     <li>
