@@ -16,7 +16,9 @@
 
 header {
     background-color: grey;
+    font-family: var(--fntimp);
     border-bottom: 5px solid black;
+    margin-bottom: 4em;
 }
 
 ul {

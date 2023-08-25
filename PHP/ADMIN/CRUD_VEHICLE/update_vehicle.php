@@ -163,12 +163,19 @@ else {
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"  method="post" class="update" enctype="multipart/form-data">
             <div>
                 <a href="edit_image.php?id=<?php echo $id; ?>" class="btn btn-primary">Editer l'image</a>
+                <label>Marque</label>
                 <input type="text" name="marque" placeholder="" value="<?=$marque;?>">
+                <label>Modèle</label>
                 <input type="text" name="modele" placeholder="Modele" value="<?=$modele;?>">
+                <label>Puissance (CV)</label>
                 <input type="text" name="puissance" placeholder="Puissance" value="<?=$puissance;?>">
+                <label>Carburant</label>
                 <input type="text" name="carburant" placeholder="Carburant" value="<?=$carburant;?>">
+                <label>Description</label>
                 <input type="text" name="description" placeholder="Description" value="<?=$description;?>">
+                <label>Prix (HT)</label>
                 <input type="text" name="prix_ht" placeholder="Prix HT" value="<?=$price_ht;?>">
+                <label>TVA</label>
                 <input type="text" name="tva" placeholder="TVA" value="<?=$tva;?>">
             </div>
             <input type="submit" value="Enregistrer">

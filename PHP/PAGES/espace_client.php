@@ -45,8 +45,8 @@ if(isset($_SESSION['id'])) {
                     <img src="../../IMG/user.png" alt="user">
                 </div>
                 <div class="name_container">
-                    <p>Nom : <?php echo $user_data['lastname'];?></p>
                     <p>Prénom : <?php echo $user_data['firstname'];?></p>
+                    <p>Nom : <?php echo $user_data['lastname'];?></p>
                 </div>
                 <div class="container_information">
                     <p>Adresse : <?php echo $user_data['address'];?></p>

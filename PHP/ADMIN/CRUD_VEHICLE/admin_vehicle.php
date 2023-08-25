@@ -20,11 +20,9 @@ if (isset($_SESSION['role'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../CSS/index_admin.css">
-    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
-    <link rel="stylesheet" href="../../../css/panel_vehicule.css">
     <link rel="stylesheet" href="../../../css/header.css">
-    <link rel="stylesheet" href="../../../css/footer.css">
+    <link rel="stylesheet" href="../../../CSS/admin.css">
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <title>Accueil Admin Véhicules</title>
 </head>
 
@@ -62,7 +60,7 @@ if (isset($_SESSION['role'])) {
             while ($row = mysqli_fetch_array($result)) {
                 echo '<tr>';
                 echo '<td>' . $row['id'] . '</td>';
-                echo '<td><img src="../../../IMG/' . $row['picture'] . '" alt="Image du véhicule"></td>';
+                echo '<td><img src="../../../IMG/' . $row['picture'] . '" alt="Image du véhicule" width="100px"></td>';
                 echo '<td>' . $row['marque'] . '</td>';
                 echo '<td>' . $row['modele'] . '</td>';
                 echo '<td>' . $row['puissance'] . '</td>';
@@ -88,8 +86,6 @@ if (isset($_SESSION['role'])) {
     ?>
 
 <a href="./create_vehicle.php">Ajouter un véhicule</a>
-
-<?php include '../../COMPONENTS/footer.php' ?>
 
 </body>
 
