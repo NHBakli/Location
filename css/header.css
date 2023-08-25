@@ -1,23 +1,38 @@
-ul{
-    background-color: grey;
-    display: flex;
-    justify-content: space-evenly;
-    width: 98.7%;
-    height: 50px;
-    margin-top: -0.4%;
-    margin-left: -0.4%;
-    align-items: center;
+:root {
+
+    /* Charte graphique */
+    --grey: gray;
+    --bckgrnd: #6500CB;
+    --bckblc: #8B1EF8;
+
+    /* Style police */
+    --fntimp: 'Impact';
+    --textshdw: 0px 0px 10px white;
 }
 
-li{
+* {
+    margin: 0;
+}
+
+header {
+    background-color: grey;
+    border-bottom: 5px solid black;
+}
+
+ul {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 1em;
+}
+
+li {
     list-style: none;
 }
 
-a{
-    text-decoration: none;
-    color: black;
-    font-size: 25px;
+a {
+    font-size: 1.5em;
     font-family: Impact;
+    color: black;
+    text-decoration: none;
 }
-
-

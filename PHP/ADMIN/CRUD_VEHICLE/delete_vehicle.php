@@ -1,33 +1,65 @@
 <?php
 
-require '../../../PHP/CRUD/config.php';
+session_start();
 
-$id = $_GET['id'];
+if (isset($_SESSION['role'])) {
+    $role = $_SESSION['role'];
+    if ($role != 'ADMIN') {
+        header('location: ../../index.php');
+    }
+} else {
+    $role = '';
+    if ($role != 'ADMIN') {
+        header('location: ../../index.php');
+    }
+}
 
-if (isset($_POST['id']) && !empty($_POST['id'])){
-    
-    $sql = "DELETE FROM produits WHERE id=?";
+include "../../CRUD/connection.php";
 
-    if ($stmt = mysqli_prepare($conn, $sql)){
-        mysqli_stmt_bind_param($stmt, "i", $param_id);
+if (isset($_POST['id']) && !empty($_POST['id'])) {
+    $id = trim($_POST['id']);
 
-        $param_id = trim($_POST['id']);
+    // Récupérer le nom de l'image associée au véhicule
+    $sql_select_image = "SELECT picture FROM vehicles WHERE id=?";
+    if ($stmt_select_image = mysqli_prepare($connection, $sql_select_image)) {
+        mysqli_stmt_bind_param($stmt_select_image, "i", $param_id);
+        $param_id = $id;
+        if (mysqli_stmt_execute($stmt_select_image)) {
+            $result_image = mysqli_stmt_get_result($stmt_select_image);
+            if (mysqli_num_rows($result_image) == 1) {
+                $row_image = mysqli_fetch_assoc($result_image);
+                $image_name = $row_image['picture'];
 
-        if(mysqli_stmt_execute($stmt)){
-            header("Location: ../index_produits.php");
-            exit();
-        }else{
-            echo "Erreur de suppression";
+                // Supprimer l'image du dossier IMG
+                $image_path = "../../../IMG/" . $image_name;
+                if (file_exists($image_path)) {
+                    unlink($image_path);
+                }
+
+                // Supprimer l'enregistrement de la base de données
+                $sql_delete = "DELETE FROM vehicles WHERE id=?";
+                if ($stmt_delete = mysqli_prepare($connection, $sql_delete)) {
+                    mysqli_stmt_bind_param($stmt_delete, "i", $param_id);
+
+                    if (mysqli_stmt_execute($stmt_delete)) {
+                        header("Location: ./admin_vehicle.php");
+                        exit();
+                    } else {
+                        echo "Erreur de suppression";
+                    }
+                }
+
+                mysqli_close($connection);
+            }
         }
     }
-    mysqli_close($conn);
-}else{
- 
-    if(empty(trim($_GET['id']))){
-        header('Location: ../index_produits.php');
+} else {
+    if (empty(trim($_GET['id']))) {
+        header('Location: ../index_admin.php');
         exit();
     }
 }
+
 
 ?>
 
@@ -36,29 +68,22 @@ if (isset($_POST['id']) && !empty($_POST['id'])){
 
 <head>
     <meta charset="UTF-8">
-    <title>Corbeille</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-    .wrapper {
-        width: 600px;
-        margin: 0 auto;
-    }
-    </style>
+    <title>Suppression d'un véhicule</title>
 </head>
 
 <body>
-    <div class="wrapper">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <h2 class="mt-5 mb-3">Suppression d'un produit</h2>
+    <div>
+        <div>
+            <div>
+                <div>
+                    <h2>Suppression d'un véhicule</h2>
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                        <div class="alert alert-danger">
+                        <div>
                             <input type="hidden" name="id" value="<?php echo trim($_GET["id"]); ?>" />
-                            <p>Etes vous sûre de vouloir supprimer ce produit ?</p>
+                            <p>Êtes vous sûr de vouloir supprimer ce véhicule ?</p>
                             <p>
-                                <input type="submit" value="Yes" class="btn btn-danger">
-                                <a href="../index_produits.php" class="btn btn-secondary">No</a>
+                                <input type="submit" value="Oui">
+                                <a href="./admin_vehicle.php">Non</a>
                             </p>
                         </div>
                     </form>

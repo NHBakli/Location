@@ -16,63 +16,70 @@ session_start();
 </head>
 
 <body>
-    
+
     <?php include '../COMPONENTS/header.php' ?>
 
-    <h1>Accueil</h1>
+    <main>
+        
+        <h1>Accueil</h1>
 
-    <h2>Véhicules de location disponibles</h2>
+        <h2>Véhicules de location disponibles</h2>
 
-    <?php
+        <?php
 
-    require '../crud/connection.php';
+        require '../crud/connection.php';
 
-    $sql = "SELECT * FROM vehicles";
+        $sql = "SELECT * FROM vehicles";
 
-    if ($result = mysqli_query($connection, $sql)) {
-        if (mysqli_num_rows($result) > 0) {
-    ?>
-            <div class="cars">
+        if ($result = mysqli_query($connection, $sql)) {
+            if (mysqli_num_rows($result) > 0) {
 
-                <?php while ($row = mysqli_fetch_array($result)) {
-                ?>
+        ?>
 
-                    <div class=card>
-                        
-                        <div>
-                            
-                            <p><?= $row['marque'] . ' ' . $row['modele'] ?></p>
-                            <p><?= $row['carburant'] ?></p>
-                            
+                <div class="cars">
+
+                    <?php while ($row = mysqli_fetch_array($result)) {
+                    ?>
+
+                        <div class=card>
+
+                            <div>
+
+                                <p><?= $row['marque'] . ' ' . $row['modele'] ?></p>
+                                <p><?= $row['carburant'] ?></p>
+
+                            </div>
+
+                            <img src="../../IMG/<?= $row['picture'] ?>" width="300px">
+
+                            <div class="price">
+
+                                <p><?= $row['price_ht'] . '€' . ' HT' . ' (TVA : ' . $row['tva'] . '%)' ?></p>
+
+                            </div>
+
+                            <div>
+
+                                <p><br> <?= $row['description'] ?></p>
+
+                            </div>
                         </div>
-                        
-                        <img src="../../IMG/<?= $row['picture'] ?>" width="300px">
 
-                        <div class="price">
+                    <?php
 
-                            <p><?= $row['price_ht'] . '€' . ' HT' . ' (TVA : ' . $row['tva'] . '%)' ?></p>
+                    }
+                    ?>
+                </div>
 
-                        </div>
+        <?php
 
-                        <div>
-
-                            <p><br> <?= $row['description'] ?></p>
-
-                        </div>
-                    </div>
-
-                <?php
-
-                }
-                ?>
-            </div>
-
-    <?php
+            }
         }
-    }
-    mysqli_close($connection);
+        mysqli_close($connection);
 
-    ?>
+        ?>
+
+    </main>
 
     <?php include '../COMPONENTS/footer.php' ?>
 

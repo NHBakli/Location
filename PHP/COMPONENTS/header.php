@@ -13,7 +13,6 @@ if(isset($_SESSION['role'])) {
 }
 ?>
 
-
 <header>
 
 <ul>

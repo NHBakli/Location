@@ -16,8 +16,8 @@
 
 body{
     background-color: var(--bckgrnd);
-    text-align: center;
     font-family: var(--fntimp);
+    text-align: center;
 }
 
 .cars{

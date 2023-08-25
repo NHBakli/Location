@@ -1,74 +1,120 @@
-<?php
-require_once "../../../php/crud/config.php";
+<?php 
+include "../../CRUD/connection.php";
 
-$ref = $cat = $pht = $tva = $desc = $stock = '';
-$ref_err = $cat_err = $pht_err = $tva_err = $desc_err = $stock_err = '';
-if($_SERVER["REQUEST_METHOD"] == "POST"){
+session_start();
 
-    $input_ref = trim($_POST["ref"]);
-    if(empty($input_ref)){
-        $ref_err = "entrer une ref"; 
-    } else{
-        $ref = $input_ref;
+if (isset($_SESSION['role'])) {
+    $role = $_SESSION['role'];
+    if ($role != 'ADMIN') {
+        header('location: ../../../index.php');
     }
-    
-    $input_cat = trim($_POST["cat"]);
-    if(empty($input_cat)){
-        $cat_err = "entrer une catégorie";     
-    } else{
-        $cat = $input_cat;
+} else {
+    $role = '';
+    if ($role != 'ADMIN') {
+        header('location: ../../../index.php');
+    }
+}
+
+$image = $marque = $modele = $puissance = $carburant = $description = $prix_ht = $tva = "";
+$image_err = $marque_err = $modele_err = $puissance_err = $err_carburant = $err_description = $err_prix_ht = $err_tva = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+        $img_nom = $_FILES['image']['name'];
+        $tmp_nom = $_FILES['image']['tmp_name'];
+        $time = time();
+        $nouveau_nom_img = $time . $img_nom;
+        $deplacer_img = move_uploaded_file($tmp_nom, "../../../IMG/" . $nouveau_nom_img);
+        if (!$deplacer_img) {
+            $image_err = "Erreur lors de l'upload de l'image.";
+        } else {
+            $image = $nouveau_nom_img;
+        }
+    } else {
+        $image_err = "Veuillez sélectionner une image.";
     }
 
-    $input_pht = trim($_POST["pht"]);
-    if(empty($input_pht)){
-        $pht_err = "entrer un prix unitaire";
-    } else{
-        $pu = $input_pht;
+    $input_marque = trim($_POST["marque"]);
+    if (empty($input_marque)) {
+        $marque_err = "Entrer une marque";
+    } else {
+        $marque = $input_marque;
     }
-    
+
+    $input_modele = trim($_POST["modele"]);
+    if (empty($input_modele)) {
+        $modele_err = "Entrer une modele";
+    } else {
+        $modele = $input_modele;
+    }
+
+    $input_puissance = trim($_POST["puissance"]);
+    if (empty($input_puissance)) {
+        $puissance_err = "Entrer une puissance";
+    } else {
+        $puissance = $input_puissance;
+    }
+
+    $input_carburant = trim($_POST["carburant"]);
+    if (empty($input_carburant)) {
+        $carburant_err = "Entrer un carburant";
+    } else {
+        $carburant = $input_carburant;
+    }
+
+    $input_description = trim($_POST["description"]);
+    if (empty($input_description)) {
+        $description_err = "Entrer une description";
+    } else {
+        $description = $input_description;
+    }
+
+    $input_prix_ht = trim($_POST["prix_ht"]);
+    if (empty($input_prix_ht)) {
+        $prix_ht_err = "Entrer un prix hors taxe";
+    } else {
+        $prix_ht = $input_prix_ht;
+    }
+
     $input_tva = trim($_POST["tva"]);
-    if(empty($input_tva)){
-        $tva_err = "entrer une tva";     
-    } else{
+    if (empty($input_tva)) {
+        $tva_err = "Entrer une TVA";
+    } else {
         $tva = $input_tva;
     }
 
-    $input_desc = trim($_POST["desc"]);
-    if(empty($input_desc)){
-        $desc_err = "entrer la description";     
-    } else{
-        $desc = $input_desc;
-    }
+    if (empty($image_err) && empty($marque_err) && empty($modele_err) && empty($puissance_err) && empty($carburant_err) && empty($description_err) && empty($prix_ht_err) && empty($tva_err)) {
 
-    $input_stock = trim($_POST["stock"]);
-    if(empty($input_stock)){
-        $stock_err = "entrer le stock";     
-    } else{
-        $stock = $input_stock;
-    }
-    
-    if(empty($ref_err) && empty($cat_err) && empty($pht_err) && empty($tva_err) && empty($desc_err) && empty($stock_err)){
+
+        $param_image = $image;
+        $param_marque = $marque;
+        $param_modele = $modele;
+        $param_puissance = $puissance;
+        $param_carburant = $carburant;
+        $param_description = $description;
+        $param_prix_ht = $prix_ht;
+        $param_tva = $tva;
         
-            $param_ref = $ref;
-            $param_cat = $cat;
-            $param_pht = $pht;
-            $param_tva = $tva;
-            $param_desc = $desc;
-            $param_stock = $stock;
 
-            $sql = "INSERT INTO produits (reference, categorie, prixht, tva, description, stock) VALUES ( '$param_ref', '$param_cat', '$param_pht', '$param_tva', '$param_desc', '$param_stock')";
-            
-            $result = mysqli_query($conn, $sql);
-            
-            if($result){
-                mysqli_close($conn);
-                header("location: ../index_produits.php");
-                exit();
-            } else{
-                echo "Erreur de création";
-            }
+
+        $sql = "INSERT INTO vehicles (picture, marque, modele, puissance, carburant, description, price_ht, tva) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = mysqli_prepare($connection, $sql);
+        mysqli_stmt_bind_param($stmt, "sssssssd", $image, $marque, $modele, $puissance, $carburant, $description, $prix_ht, $tva);
+
+        if (mysqli_stmt_execute($stmt)) {
+            // Success
+            mysqli_stmt_close($stmt);
+            mysqli_close($connection);
+            header("location: ./admin_vehicle.php");
+            exit();
+        } else {
+            echo "Erreur lors de l'insertion dans la table.";
         }
-    
+    } else {
+        echo "Erreur lors de l'insertion dans la table.";
+    }
+    mysqli_stmt_close($stmt);
 }
 ?>
 
@@ -76,58 +122,51 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Update Record</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        .wrapper{
-            width: 600px;
-            margin: 0 auto;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../css/create_vehicle.css">
+    <link rel="stylesheet" href="../../../css/header.css">
+    <link rel="stylesheet" href="../../../css/footer.css">
+    <title>Pannel Vehicule</title>
 </head>
+
 <body>
-    <div class="wrapper">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <h2 class="mt-5">Création d'un produit</h2><br>
-                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"  method="post">
-                        <div class="form-group">
-                            <label>Référence</label>
-                            <input type="text" name="ref" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>Catégorie</label>
-                            <input type="text" name="cat" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>P.U. HT</label>
-                            <input type="text" name="pht" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>TVA</label>
-                            <input type="text" name="tva" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>Description</label>
-                            <input type="text" name="desc" class="form-control">
-                        </div>
 
-                        <!-- <div class="form-group">
-                            <label>Description</label>
-                            <textarea style="resize: none" name="desc" class="form-control" rows="5"></textarea>
-                        </div> -->
+<?php include '../../ADMIN/ADMIN_COMPONENTS/header_admin.php' ?>
 
-                        <div class="form-group">
-                            <label>Stock</label>
-                            <input type="number" name="stock" class="form-control">
-                        </div>
-                        <input type="submit" name="submit" class="btn btn-primary" value="Enregistrer">
-                        <a href="../index_produits.php" class="btn btn-secondary ml-2">Annuler</a>
-                    </form>
-                </div>
-            </div>        
-        </div>
+<main>
+
+    <div class="categorie">
+
+        <p>Photo</p>
+        <p>Marque</p>
+        <p>Modèle</p>
+        <p>Puissance</p>
+        <p>Carburant</p>
+        <p>Description</p>
+        <p>Prix HT</p>
+        <p>TVA</p>
+
+    </div class="create">
+    
+        <form action="" method="POST" enctype="multipart/form-data"> 
+            <div class="affichage">
+            <label>Ajouter une photo</label>
+            <input type="file" name="image">
+            <input type="text" name="marque" placeholder="Marque">
+            <input type="text" name="modele" placeholder="Modele">
+            <input type="text" name="puissance" placeholder="Puissance">
+            <input type="text" name="carburant" placeholder="Carburant">
+            <input type="text" name="description" placeholder="Description">
+            <input type="text" name="prix_ht" placeholder="Prix HT">
+            <input type="text" name="tva" placeholder="TVA">
+
+            <button>Valider</button>
+            <a href="./admin_vehicle.php">Annuler</a>
+        </form>
     </div>
+
+</main>
+
+<?php include '../../COMPONENTS/footer.php' ?>
 </body>
 </html>

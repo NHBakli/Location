@@ -134,5 +134,3 @@ if (isset($_POST['id']) && !empty(trim($_POST['login']))) {
 </body>
 
 </html>
-
-preg_match()

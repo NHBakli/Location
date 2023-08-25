@@ -1,16 +1,14 @@
 <?php
-
 session_start();
-
 if (isset($_SESSION['role'])) {
     $role = $_SESSION['role'];
     if ($role != 'ADMIN') {
-        header('location: ../../../index.php');
+        header('location: ../../index.php');
     }
 } else {
     $role = '';
     if ($role != 'ADMIN') {
-        header('location: ../../../index.php');
+        header('location: ../../index.php');
     }
 }
 
@@ -22,21 +20,23 @@ if (isset($_SESSION['role'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../../CSS/admin.css">
+    <link rel="stylesheet" href="../../CSS/index_admin.css">
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
-    <?php include '../../COMPONENTS/important_link.php' ?>
+    <link rel="stylesheet" href="../../../css/panel_vehicule.css">
+    <link rel="stylesheet" href="../../../css/header.css">
+    <link rel="stylesheet" href="../../../css/footer.css">
     <title>Accueil Admin Véhicules</title>
 </head>
 
 <body>
 
-    <?php include '../ADMIN_COMPONENTS/header_admin.php' ?>
+<?php include '../../ADMIN/ADMIN_COMPONENTS/header_admin.php' ?>
 
     <h1>Véhicules :</h1>
 
     <?php
 
-    require '../../CRUD/connection.php';
+    include "../../CRUD/connection.php";
 
     $sql = "SELECT * FROM vehicles";
 
@@ -46,7 +46,7 @@ if (isset($_SESSION['role'])) {
             echo '<thead>';
             echo '<tr>';
             echo '<th>ID</th>';
-            // echo '<th>Photo</th>';
+            echo '<th>Photo</th>';
             echo '<th>Marque</th>';
             echo '<th>Modèle</th>';
             echo '<th>Puissance (CV)</th>';
@@ -62,7 +62,7 @@ if (isset($_SESSION['role'])) {
             while ($row = mysqli_fetch_array($result)) {
                 echo '<tr>';
                 echo '<td>' . $row['id'] . '</td>';
-                // echo '<td>' . $row['picture'] . '</td>';
+                echo '<td><img src="../../../IMG/' . $row['picture'] . '" alt="Image du véhicule"></td>';
                 echo '<td>' . $row['marque'] . '</td>';
                 echo '<td>' . $row['modele'] . '</td>';
                 echo '<td>' . $row['puissance'] . '</td>';
@@ -71,8 +71,8 @@ if (isset($_SESSION['role'])) {
                 echo '<td>' . $row['price_ht'] . '</td>';
                 echo '<td>' . $row['tva'] . '</td>';
                 echo '<td>';
-                echo '<a href="./update_vehicle.php?id=' . $row['id'] . '"><iconify-icon icon="material-symbols:edit"></iconify-icon> </a>';
-                echo '<a href="./delete_vehicle.php?id=' . $row['id'] . '"><iconify-icon icon="ic:baseline-delete"></iconify-icon></a>';
+                echo '<a href="../CRUD_VEHICLE/update_vehicle.php?id=' . $row['id'] . '"><iconify-icon icon="material-symbols:edit"></iconify-icon> </a>';
+                echo '<a href="../CRUD_VEHICLE/delete_vehicle.php?id=' . $row['id'] . '"><iconify-icon icon="ic:baseline-delete"></iconify-icon></a>';
                 echo '</td>';
                 echo '</tr>';
             }
@@ -83,9 +83,13 @@ if (isset($_SESSION['role'])) {
         }
     } else {
         echo '<div>Erreur de connexion à la BDD.</div>';
-    }
+    } 
     mysqli_close($connection);
     ?>
+
+<a href="./create_vehicle.php">Ajouter un véhicule</a>
+
+<?php include '../../COMPONENTS/footer.php' ?>
 
 </body>
 
