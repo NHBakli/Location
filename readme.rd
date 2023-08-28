@@ -1,4 +1,4 @@
-Site de location de voiture qui a était créer une semaine 
+Site de location de voiture qui a été créé il y a une semaine.
 
 ↓ Fonctionnalité ↓
 
