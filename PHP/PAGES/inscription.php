@@ -3,7 +3,7 @@
 session_start();
 
 require_once "../CRUD/connection.php";
-require_once "../CRUD/protected.php";
+require_once "../CRUD/protect.php";
 
 $nom = $pre = $mail = $mess = $password = $country = $city = $code = $address ="";
 $nom_err = $pre_err = $mail_err = $err_mess = $err_password = $err_country = $err_city = $err_code = $err_address ="";
@@ -68,7 +68,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     if (empty($pre_err) && empty($nom_err) && empty($mail_err) && empty($password_err) && empty($country_err) && empty($city_err) && empty($code_err) && empty($address_err)){
 
-        $password = protect_montexte($password);
+        $password = protect_imput($password);
 
         $pass = password_hash($password, PASSWORD_DEFAULT);
 
