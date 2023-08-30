@@ -6,7 +6,7 @@ if (isset($_POST['submit'])) {
     if (isset($_POST['email']) && isset($_POST['password'])) {
         $email = $_POST['email'];
         $psswrd = $_POST['password'];
-        $erreur = "";
+        $error = "";
 
         include_once "../CRUD/connection.php";
 
@@ -25,11 +25,11 @@ if (isset($_POST['submit'])) {
                 header("Location: ../../index.php");
                 exit();
             } else {
-                $erreur = "Adresse mail ou mot de passe incorrect";
-                var_dump($erreur, $password);
+                $error = "Mot de passe incorrect";
             }
+
         } else {
-            $erreur = "Adresse Mail ou Mot de passe incorrect !";
+            $error = "Adresse mail incorrecte";
         }
     }
 }
@@ -66,7 +66,7 @@ if (isset($_POST['submit'])) {
 
             <div class="button_container">
                 <button type="submit" name="submit" value="Enregistrer">Connexion</button>
-                <a href="../CONTENT/register.php">Créer un compte</a>
+                <a href="../CONTENT/register.php">Créer votre compte</a>
             </div>
 
         </form>

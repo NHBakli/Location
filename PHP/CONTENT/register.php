@@ -5,84 +5,83 @@ session_start();
 require_once "../CRUD/connection.php";
 require_once "../CRUD/protect.php";
 
-$nom = $pre = $email = $mess = $password = $country = $city = $code = $address ="";
-$nom_err = $pre_err = $email_err = $err_mess = $err_password = $err_country = $err_city = $err_code = $err_address ="";
+$lastname = $firstname = $email = $psswrd = $country = $city = $postal_code = $address = "";
+$err_lastname = $err_firstname = $err_email = $err_psswrd = $err_country = $err_city = $err_postal_code = $err_address = "";
 
-if($_SERVER["REQUEST_METHOD"] == "POST"){
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $input_nom = trim($_POST["nom"]);
-    if(empty($input_nom)){
-        $nom_err = "entrer un nom"; 
-    } else{
-        $nom = $input_nom;
+    $input_lastname = trim($_POST["lastname"]);
+    if (empty($input_lastname)) {
+        $err_lastname = "Renseignez votre Nom";
+    } else {
+        $lastname = $input_lastname;
     }
-    
-    $input_pre = trim($_POST["pre"]);
-    if(empty($input_pre)){
-        $pre_err = "entrer un prénom";     
-    } else{
-        $pre = $input_pre;
+
+    $input_firstname = trim($_POST["firstname"]);
+    if (empty($input_firstname)) {
+        $err_firstname = "Renseignez votre Prénom";
+    } else {
+        $firstname = $input_firstname;
     }
 
     $input_email = trim($_POST["email"]);
-    if(empty($input_email)){
-        $email_err = "entrer un mail";
-    } else{
+    if (empty($input_email)) {
+        $email_err = "Renseignez votre Adresse mail";
+    } else {
         $email = $input_email;
     }
-    
-    $input_password = trim($_POST["password"]);
-    if(empty($input_password)){
-        $password_err = "entrer un mot de passe";     
-    } else{
-        $password = $input_password;
-    }
 
-    $input_country = trim($_POST["country"]);
-    if(empty($input_country)){
-        $country_err = "entrer une ville";     
-    } else{
-        $country = $input_country;
-    }
-
-    $input_city = trim($_POST["city"]);
-    if(empty($input_city)){
-        $city_err = "entrer votre villle";     
-    } else{
-        $city = $input_city;
-    }
-
-    $input_code = trim($_POST["code"]);
-    if (empty($input_code)) {
-        $code_err = "Veuillez entrer un code.";
+    $input_psswrd = trim($_POST["password"]);
+    if (empty($input_psswrd)) {
+        $err_psswrd = "Choisissez un Mot de passe";
     } else {
-        $code = $input_code;
+        $psswrd = $input_psswrd;
     }
 
     $input_address = trim($_POST["address"]);
     if (empty($input_address)) {
-        $address_err = "Veuillez entrer une adresse.";
+        $err_address = "Renseignez votre Adresse";
     } else {
         $address = $input_address;
     }
+    
+    $input_postal_code = trim($_POST["postal_code"]);
+    if (empty($input_postal_code)) {
+        $err_postal_code = "Renseignez votre Code postal";
+    } else {
+        $postal_code = $input_postal_code;
+    }
+    
+    $input_city = trim($_POST["city"]);
+    if (empty($input_city)) {
+        $err_city = "Renseignez votre Ville";
+    } else {
+        $city = $input_city;
+    }
+    
+    $input_country = trim($_POST["country"]);
+    if (empty($input_country)) {
+        $err_country = "Renseignez votre Pays";
+    } else {
+        $country = $input_country;
+    }
 
-    if (empty($pre_err) && empty($nom_err) && empty($email_err) && empty($password_err) && empty($country_err) && empty($city_err) && empty($code_err) && empty($address_err)){
+    if (empty($err_lastname) && empty($err_firstname) && empty($err_email) && empty($err_psswrd) && empty($err_address) && empty($err_postal_code) && empty($err_city) && empty($err_country)) {
 
-        $password = protect_imput($password);
+        $psswrd = protect_imput($psswrd);
+        $psswrd_hashed = password_hash($psswrd, PASSWORD_DEFAULT);
 
-        $pass = password_hash($password, PASSWORD_DEFAULT);
-
-        $param_nom = $nom;
-        $param_pre = $pre;
+        $param_lastname = $lastname;
+        $param_firstname = $firstname;
         $param_email = $email;
-        $param_password = $pass;
-        $param_country = $country;
-        $param_city = $city;
-        $param_code = $code;
+        $param_psswrd_hashed = $psswrd_hashed;
         $param_address = $address;
+        $param_postal_code = $postal_code;
+        $param_city = $city;
+        $param_country = $country;
         $role = "MEMBRE";
 
-        // Insérer dans la première table
+        // Insertion dans la première table
         $sql_users = "INSERT INTO users (login, password, role) VALUES (?, ?, ?)";
         $stmt_users = mysqli_prepare($connection, $sql_users);
         mysqli_stmt_bind_param($stmt_users, "sss", $param_email, $param_password, $role);
@@ -104,70 +103,78 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 echo "Erreur lors de l'insertion dans la table .";
             }
             mysqli_stmt_close($stmt_customers);
-} else {
-    echo "Erreur lors de l'insertion dans la table 'users'.";
-}
-mysqli_stmt_close($stmt_users);
+        } else {
+            echo "Erreur lors de l'insertion dans la table 'users'.";
+        }
+        mysqli_stmt_close($stmt_users);
     }
 }
+
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../CSS/header.css">    
+    <link rel="stylesheet" href="../../CSS/header.css">
     <link rel="stylesheet" href="../../CSS/register.css">
     <link rel="stylesheet" href="../../CSS/footer.css">
     <title>Inscription</title>
 </head>
+
 <body>
-<?php include '../COMPONENTS/header.php' ?>
 
-<main>
-    
-    <div class="container">
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"  method="post" class="inscription">
-            <div class="container_top">
-                <div class="firstname_container">
-                    <input type="text" placeholder="Nom" name="nom" required>
-                </div>
-                <div class="lastname_container">
-                    <input type="text" placeholder="Prénom" name="pre" required>
-                </div> 
-            </div>
-            <div class="mail_container">
-                <input type="email" placeholder="Email" name="email" required>
-            </div>
-            <div class="password_container">
-                <input type="password" placeholder="Mot de passe" name="password" required>
-            </div>
-            <div class="container_item_adress">
-                <div class="country_container">
-                    <input type="text" placeholder="Pays" name="country" required>
-                </div>
-                <div class="city_container">
-                    <input type="text" placeholder="Ville" name="city" required>
-                </div>
-                <div class="adress_code_container">
-                    <input type="text" placeholder="Code postal" name="code" required>
-                </div> 
-            </div> 
-            <div class="address_container">
-                <input type="text" placeholder="Adresse" name="address" required>
-            </div>
-            <div class="button_container">
-                <button type="submit" name="submit" value="Enregistrer">S'inscrire</button>
-                <a href="../CONTENT/login.php">Avez-vous déjà un compte ?</a>
-            </div>
-        </form>
-    </div>
-</main>
+    <?php include '../COMPONENTS/header.php' ?>
 
-<?php include '../COMPONENTS/footer.php' ?>
+    <main>
+
+        <div class="container">
+
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="inscription">
+
+                <div class="container_top">
+                    <div class="lastname_container">
+                        <input type="text" placeholder="Nom" name="lastname" required>
+                    </div>
+                    <div class="firstname_container">
+                        <input type="text" placeholder="Prénom" name="firstname" required>
+                    </div>
+                </div>
+                <div class="mail_container">
+                    <input type="email" placeholder="Adresse mail" name="email" required>
+                </div>
+                <div class="password_container">
+                    <input type="password" placeholder="Mot de passe" name="password" required>
+                </div>
+                <div class="container_item_adress">
+                    <div class="address_container">
+                        <input type="text" placeholder="Adresse" name="address" required>
+                    </div>
+                    <div class="adress_code_container">
+                        <input type="text" placeholder="Code postal" name="postal_code" required>
+                    </div>
+                    <div class="city_container">
+                        <input type="text" placeholder="Ville" name="city" required>
+                    </div>
+                    <div class="country_container">
+                        <input type="text" placeholder="Pays" name="country" required>
+                    </div>
+                </div>
+                <div class="button_container">
+                    <button type="submit" name="submit" value="Enregistrer">S'inscrire</button>
+                    <a href="../CONTENT/login.php">Avez-vous déjà un compte ?</a>
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+
+    <?php include '../COMPONENTS/footer.php' ?>
 
 </body>
+
 </html>
