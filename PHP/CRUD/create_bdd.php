@@ -5,20 +5,21 @@
 
 $host = 'localhost';
 $login = 'root';
-$psswrd = '';
-$connection = mysqli_connect($host, $login, $psswrd);
+$password = '';
+$connection = mysqli_connect($host, $login, $password);
 
-if(!$connection){
+if (!$connection) {
     die(mysqli_connect_error());
 }
 
 $sql = "CREATE DATABASE IF NOT EXISTS `location`";
 
-if(mysqli_query($connection, $sql)){
+if (mysqli_query($connection, $sql)) {
     echo 'La BDD « location » a été créée';
-}else{
+} else {
     echo 'Erreur de création de la BDD « location »';
 }
 
 mysqli_close($connection);
+
 ?>

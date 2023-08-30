@@ -1,5 +1,7 @@
 <?php
+
 session_start()
+
 ?>
 
 <!DOCTYPE html>
@@ -15,6 +17,7 @@ session_start()
 </head>
 
 <body>
+
     <?php include '../COMPONENTS/header.php' ?>
 
     <div class="cgu">
@@ -29,8 +32,8 @@ session_start()
 
     </div>
 
-
     <?php include '../COMPONENTS/footer.php' ?>
+    
 </body>
 
 </html>
