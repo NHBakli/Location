@@ -4,9 +4,9 @@
 
 $host = 'localhost';
 $login = 'root';
-$psswrd = '';
+$password = '';
 $db = 'location';
-$connection = mysqli_connect($host, $login, $psswrd, $db);
+$connection = mysqli_connect($host, $login, $password, $db);
 
 if(!$connection){
     die(mysqli_connect_error());

@@ -1,8 +1,10 @@
 <?php
+
 session_start();
 
 require '../CRUD/connection.php';
-require '../CRUD/protected.php';
+require '../CRUD/protect.php';
+
 ?>
 
 <?php
@@ -12,17 +14,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $input_nom = trim($_POST["nom"]);
     $input_prenom = trim($_POST["prenom"]);
     $input_address = trim($_POST["address"]);
-    $input_cp = trim($_POST["code"]);
-    $input_ville = trim($_POST["city"]);
     $input_country = trim($_POST["country"]);
+    $input_ville = trim($_POST["city"]);
+    $input_cp = trim($_POST["code"]);
     $input_email = trim($_POST["email"]);
-
 
     $update_email = "UPDATE users SET login=? WHERE id=?";
     $update_email_stmt = mysqli_prepare($connection, $update_email);
     mysqli_stmt_bind_param($update_email_stmt, "si", $input_email, $_SESSION['id']);
 
-    $sql = "UPDATE clients SET firstname=?, lastname=?, address=?, postal_code=?, city=?, country = ? WHERE user_id=?";
+    $sql = "UPDATE customers SET firstname=?, lastname=?, address=?, postal_code=?, city=?, country = ? WHERE user_id=?";
 
     if ($stmt = mysqli_prepare($connection, $sql)) {
         mysqli_stmt_bind_param($stmt, "ssssssi", $param_nom, $param_prenom, $param_address, $param_cp, $param_ville, $param_country, $param_user_id);
@@ -37,7 +38,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         if(mysqli_stmt_execute($stmt)){
             if(mysqli_stmt_execute($update_email_stmt)){
-            header("location: ./espace_client.php");
+            header("location: ./profile.php");
             exit();
             }
         } else { 
@@ -51,7 +52,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 }
 
 
-$sql = "SELECT * FROM clients";
+$sql = "SELECT * FROM customers";
 
 if ($result_clients = mysqli_query($connection, $sql)) {
     if (mysqli_num_rows($result_clients) > 0) {
@@ -89,8 +90,9 @@ mysqli_close($connection);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../css/espace_client_update.css">
-    <?php include '../COMPONENTS/important_link.php' ?>
+    <link rel="stylesheet" href="../../CSS/header.css">
+    <link rel="stylesheet" href="../../CSS/update_profile.css">
+    <link rel="stylesheet" href="../../CSS/footer.css">
     <title>Update client</title>
 </head>
 <body>
@@ -131,7 +133,7 @@ mysqli_close($connection);
             </div>
             </form>
             <div class="button_cancel">
-                <button class="cancel" type="submit" name="cancel" value="cancel"><a href="./espace_client.php">Annuler</a></button>
+                <button class="cancel" type="submit" name="cancel" value="cancel"><a href="./profile.php">Annuler</a></button>
             </div>
     </div>
 </main>

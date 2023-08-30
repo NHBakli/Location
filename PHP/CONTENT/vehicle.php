@@ -1,4 +1,6 @@
-<?php session_start();
+<?php
+
+session_start();
 
 require '../crud/connection.php';
 
@@ -6,7 +8,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
     $vehicle_id = $_GET['id'];
 
 
-$sql = "SELECT * FROM vehicles WHERE id = ? ";
+$sql = "SELECT * FROM fleet WHERE id = ? ";
 
     if ($stmt = mysqli_prepare($connection, $sql)) {
         mysqli_stmt_bind_param($stmt, "i", $vehicle_id);

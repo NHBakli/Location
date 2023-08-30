@@ -1,7 +1,7 @@
 <?php
 
 if(isset($_SESSION['users'])) {
-    $_SESSION['connect'] = 'ok'; // on récup "ok"
+    $_SESSION['connect'] = 'ok';
 }else{
     unset($_SESSION['connect']);
 }
@@ -11,11 +11,13 @@ if(isset($_SESSION['role'])) {
 }else{
     $role = '';
 }
+
 ?>
 
 <header>
 
 <ul>
+
     <li>
         <a href="../../index.php">Accueil</a>
     </li>
@@ -23,18 +25,18 @@ if(isset($_SESSION['role'])) {
     <!-- Si l'utilisateur n'est pas connecté, on affiche -->
     <?php if (!isset($_SESSION['connect']) || $_SESSION['connect'] != 'ok') :  ?>
     <li >
-        <a href="./connexion.php">Inscription/Connexion</a>
+        <a href="./login.php">Inscription/Connexion</a>
     </li>
 
     <!-- Si l'utilisateur est connecté, on affiche déconnexion et espace client -->
     <?php else: ?>
     <li>
-        <a href="../PAGES/espace_client.php">Espace Client</a>
+        <a href="../CONTENT/profile.php">Profil</a>
     </li>
     <?php endif ; ?>
 
     <li>
-        <a href="../PAGES/contact.php">Contact</a>
+        <a href="../CONTENT/contact.php">Contact</a>
     </li>
 
     <!-- Si le role de l'utilisateur est "ADMIN" alors on affiche les sections Admin-->
@@ -47,7 +49,7 @@ if(isset($_SESSION['role'])) {
 
     <?php if (isset($_SESSION['connect']) && $_SESSION['connect'] == 'ok') :  ?>
     <li >
-        <a href="../PAGES/deconnexion.php">Déconnexion</a>
+        <a href="../CONTENT/logout.php">Déconnexion</a>
     </li>
     <?php endif ; ?>
 </ul>

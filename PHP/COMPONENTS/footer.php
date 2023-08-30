@@ -1,3 +1,3 @@
 <footer>
-    <a href="../PAGES/cgu.php">CGU</a>
+    <a href="../CONTENT/cgu.php">CGU</a>
 </footer>

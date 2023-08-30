@@ -1,15 +1,15 @@
 <?php
 
 // Fichier de création des tables
-// http://localhost/vscode/Github/Location/PHP/CRUD/create_table.php
+// http://localhost/VSCode/Github/Location/PHP/CRUD/create_table.php
 
 require './connection.php';
 
 $sql = "CREATE TABLE IF NOT EXISTS users (
     id INT(10) unsigned auto_increment PRIMARY KEY NOT NULL,
-    login VARCHAR(50) UNIQUE NOT NULL,
-    password VARCHAR(50) NOT NULL,
-    role VARCHAR(20) NOT NULL,
+    login VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(256) NOT NULL,
+    role VARCHAR(25) NOT NULL,
     token_reset VARCHAR(256) NULL, 
     isVerified BOOL NULL)";
 
@@ -26,7 +26,7 @@ $sql = "CREATE TABLE IF NOT EXISTS customers (
     firstname VARCHAR(50) NOT NULL,
     country VARCHAR(50) NULL,
     city VARCHAR(50) NULL,
-    postal_code VARCHAR(20) NULL,
+    postal_code VARCHAR(10) NULL,
     address VARCHAR(256) NULL,
     user_id INT(10) unsigned NOT NULL,         
     FOREIGN KEY (user_id) REFERENCES users(id))";

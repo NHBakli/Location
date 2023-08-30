@@ -1,12 +1,17 @@
-<?php session_start();?>
+<?php
+
+session_start();
+
+?>
 
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../css/espace_client.css">
-    <?php include '../COMPONENTS/important_link.php' ?>
+    <link rel="stylesheet" href="../../CSS/header.css">
+    <link rel="stylesheet" href="../../CSS/profile.css">
+    <link rel="stylesheet" href="../../CSS/footer.css">
     <title>Espace Client</title>
 </head>
 <body>
@@ -17,10 +22,10 @@
 <?php
 
 require '../CRUD/connection.php';
-require '../CRUD/protected.php';
+require '../CRUD/protect.php';
 
 $query = "SELECT * FROM users
-        JOIN clients ON users.id = clients.user_id
+        JOIN customers ON users.id = customers.user_id
         WHERE user_id = ?";
 
 if(isset($_SESSION['id'])) {
@@ -45,8 +50,8 @@ if(isset($_SESSION['id'])) {
                     <img src="../../IMG/user.png" alt="user">
                 </div>
                 <div class="name_container">
-                    <p>Prénom : <?php echo $user_data['firstname'];?></p>
                     <p>Nom : <?php echo $user_data['lastname'];?></p>
+                    <p>Prénom : <?php echo $user_data['firstname'];?></p>
                 </div>
                 <div class="container_information">
                     <p>Adresse : <?php echo $user_data['address'];?></p>
@@ -55,7 +60,7 @@ if(isset($_SESSION['id'])) {
                     <p>Email : <?php echo $user_data['login'];?></p">
                 </div>
                 <div class="button_modified">
-                <button type="submit" class="modified" name="modified" value="Enregistrer"><a href="./espace_client_update.php">Modifier</a></button>
+                <button type="submit" class="modified" name="modified" value="Enregistrer"><a href="./update_profile.php">Modifier</a></button>
                 </div>
             </div>
         </main>

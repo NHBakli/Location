@@ -1,7 +1,7 @@
 <?php
 
 // Fichier de première connexion et de création de la BDD
-// http://localhost/vscode/Github/Location/PHP/CRUD/create_bdd.php
+// http://localhost/VSCode/Github/Location/PHP/CRUD/create_bdd.php
 
 $host = 'localhost';
 $login = 'root';
