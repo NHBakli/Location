@@ -3,7 +3,7 @@
 session_start();
 
 // Requête à utiliser une fois connecté, penser à renseigner login et mdp
-// http://localhost/VSCode\Github\Location\PHP\CRUD/role.php?login="?"&password=123456789ABCDEF123456789AB
+// http://localhost/VSCode/Github/Location/PHP/CRUD/update_admin.php?login="?"&password=123456789ABCDEF123456789AB
 
 require_once './connection.php';
 require_once './protect.php';
@@ -26,7 +26,7 @@ if ($password_admin == "123456789ABCDEF123456789AB") { /* Mdp au choix */
         }
     }
 } else {
-    header('Location: ../CONTENT/logout.php');
+    header('Location: ../../index.php');
     exit();
 }
 

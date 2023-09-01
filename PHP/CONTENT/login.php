@@ -6,7 +6,8 @@ if (isset($_POST['submit'])) {
     if (isset($_POST['email']) && isset($_POST['password'])) {
         $email = $_POST['email'];
         $psswrd = $_POST['password'];
-        $error = "";
+        $err_email = "";
+        $err_pssword = "";
 
         include_once "../CRUD/connection.php";
 

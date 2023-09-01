@@ -44,21 +44,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $address = $input_address;
     }
-    
+
     $input_postal_code = trim($_POST["postal_code"]);
     if (empty($input_postal_code)) {
         $err_postal_code = "Renseignez votre Code postal";
     } else {
         $postal_code = $input_postal_code;
     }
-    
+
     $input_city = trim($_POST["city"]);
     if (empty($input_city)) {
         $err_city = "Renseignez votre Ville";
     } else {
         $city = $input_city;
     }
-    
+
     $input_country = trim($_POST["country"]);
     if (empty($input_country)) {
         $err_country = "Renseignez votre Pays";
@@ -81,21 +81,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $param_country = $country;
         $role = "MEMBRE";
 
-        // Insertion dans la première table
+        // Insertion dans la table « users »
         $sql_users = "INSERT INTO users (login, password, role) VALUES (?, ?, ?)";
         $stmt_users = mysqli_prepare($connection, $sql_users);
-        mysqli_stmt_bind_param($stmt_users, "sss", $param_email, $param_password, $role);
+        mysqli_stmt_bind_param($stmt_users, "sss", $param_email, $param_psswrd_hashed, $role);
 
         if (mysqli_stmt_execute($stmt_users)) {
 
-            $user_id = mysqli_insert_id($connection);
-            // Insérer dans la deuxième table
+            $param_user_id = mysqli_insert_id($connection);
+            // Insertion dans la table « customers »
             $sql_customers = "INSERT INTO customers (lastname, firstname, country, city, postal_code, address, user_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
             $stmt_customers = mysqli_prepare($connection, $sql_customers);
-            mysqli_stmt_bind_param($stmt_customers, "sssssss", $param_nom, $param_pre, $param_country, $param_city, $param_code, $param_address, $user_id);
+            mysqli_stmt_bind_param($stmt_customers, "ssssssi", $param_lastname, $param_firstname, $param_address, $param_postal_code, $param_city, $param_country, $param_user_id);
 
             if (mysqli_stmt_execute($stmt_customers)) {
-                // Success
+
                 mysqli_close($connection);
                 header("location: ../../index.php");
                 exit();
