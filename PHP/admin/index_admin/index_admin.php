@@ -28,6 +28,9 @@ if (isset($_SESSION['role'])) {
 <body>
 <?php include '../ADMIN_COMPONENTS/header_admin.php' ?>
 
+<?php include '../ADMIN_COMPONENTS/grafic.php'; ?>
+
+
 
 <?php include '../../COMPONENTS/footer.php' ?>
 </body>

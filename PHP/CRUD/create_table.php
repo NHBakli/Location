@@ -80,6 +80,18 @@ if (mysqli_query($connection,$sql)){
     mysqli_error($connection,$sql);
 }
 
+
+$sql = "CREATE TABLE visiteurs (
+    id INT(6) AUTO_INCREMENT PRIMARY KEY,
+    ip VARCHAR(255),
+    navigateur VARCHAR(255),
+    date_visite DATETIME)";
+
+if (mysqli_query($connection,$sql)){
+    echo '<br> La table Visiteurs a été créée avec succès ! </br>';
+}else{
+    mysqli_error($connection,$sql);
+}
 mysqli_close($connection);
 
 ?>
